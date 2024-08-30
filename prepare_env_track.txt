@@ -1,0 +1,34 @@
+//spec: gpu support highest CUDA 11.3
+// for my GPU CUDA support highest 11.3, go on previous torch local
+
+conda create -p /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/env_track python==3.9
+conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cudatoolkit=11.3 -c pytorch
+conda install opencv
+
+conda install conda-forge::cython -y
+conda install conda-forge::filelock -y
+conda install conda-forge::filterpy -y
+conda install conda-forge::h5py -y
+conda install conda-forge::kornia -y
+conda install conda-forge::lap -y
+conda install conda-forge::loguru -y
+conda install conda-forge::motmetrics -y
+conda install conda-forge::tqdm -y
+conda install conda-forge::tensorboard -y
+conda install conda-forge::tabulate -y
+conda install conda-forge::ninja -y
+conda install conda-forge::thop -y
+conda install anaconda::scikit-image -y
+python3 -m pip install visualdl 
+conda install conda-forge::prettytable -y
+conda install anaconda::wcwidth -y
+
+python3 -m pip install yolox 
+python3 -m pip install thop 
+python3 -m pip install cython-bbox 
+python3 -m pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
+conda install conda-forge::fastapi -y
+conda install anaconda::requests -y
+conda install conda-forge::configparser -y
+
+pip install fastapi uvicorn pydantic

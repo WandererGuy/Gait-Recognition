@@ -1,0 +1,18 @@
+// spec: gpu support highest CUDA 11.3
+// for my GPU CUDA support highest 11.3, go on previous torch local
+
+conda create -p /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/env python==3.9
+conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cudatoolkit=11.3 -c pytorch
+conda install conda-forge::tqdm 
+conda install anaconda::pyyaml -y
+conda install conda-forge::tensorboard 
+conda install opencv
+conda install conda-forge::kornia 
+conda install conda-forge::einops 
+conda install conda-forge::imageio
+conda install conda-forge::matplotlib
+conda install anaconda::scikit-learn
+conda install conda-forge::loguru -y
+pip install fastapi uvicorn pydantic
+
+conda env export -p /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/env > environment.yml

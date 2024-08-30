@@ -1,0 +1,15 @@
+# guide https://github.com/PaddlePaddle/PaddleSeg/tree/release/2.9/contrib/PP-HumanSeg
+# CUDA 11.2 https://www.paddlepaddle.org.cn/
+
+conda create -p /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/env_seg python==3.9
+conda install paddlepaddle-gpu==2.6.1 cudatoolkit=11.2 -c https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/Paddle/ -c conda-forge 
+conda install opencv
+conda install anaconda::scikit-learn -y
+conda install anaconda::pyyaml -y
+
+conda install conda-forge::tqdm -y
+conda install conda-forge::filelock -y
+conda install conda-forge::prettytable -y
+python3 -m pip install visualdl 
+
+pip install fastapi uvicorn pydantic
