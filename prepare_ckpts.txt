@@ -1,4 +1,6 @@
-cd demo/checkpoints/bytetrack_model
+cd demo/checkpoints
+mkdir bytetrack_model
+cd bytetrack_model
 python3 -m pip install --upgrade --no-cache-dir gdown
 gdown https://drive.google.com/uc?id=1P4mY0Yyd3PPTybgZkjMYhFri88nTmJX5
 cd ..

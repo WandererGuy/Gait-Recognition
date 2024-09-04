@@ -10,9 +10,14 @@ import uvicorn
 import json 
 import numpy as np
 
-host_ip = '10.0.68.103'
-port_num = 8502
 
+current_script_directory = os.path.dirname(os.path.abspath(__file__))
+
+import configparser
+config = configparser.ConfigParser()
+config.read(current_script_directory +'/config.ini')
+host_ip = config['DEFAULT']['host'] 
+seg_port_num = config['DEFAULT']['seg_port_num'] 
 
 
 app = FastAPI()
@@ -109,7 +114,7 @@ async def segment(request: Request):
 
 def main():
     print('INITIALIZING FASTAPI SERVER')
-    uvicorn.run("sample_seg:app", host=host_ip, port=int(port_num), reload=True)
+    uvicorn.run("sample_seg:app", host=host_ip, port=int(seg_port_num), reload=True)
 
 
 if __name__ == "__main__":

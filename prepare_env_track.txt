@@ -3,32 +3,37 @@
 
 conda create -p /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/env_track python==3.9
 conda install pytorch==1.11.0 torchvision==0.12.0 torchaudio==0.11.0 cudatoolkit=11.3 -c pytorch
-conda install opencv
 
-conda install conda-forge::cython -y
-conda install conda-forge::filelock -y
-conda install conda-forge::filterpy -y
-conda install conda-forge::h5py -y
-conda install conda-forge::kornia -y
-conda install conda-forge::lap -y
-conda install conda-forge::loguru -y
-conda install conda-forge::motmetrics -y
-conda install conda-forge::tqdm -y
-conda install conda-forge::tensorboard -y
-conda install conda-forge::tabulate -y
-conda install conda-forge::ninja -y
-conda install conda-forge::thop -y
-conda install anaconda::scikit-image -y
-python3 -m pip install visualdl 
-conda install conda-forge::prettytable -y
-conda install anaconda::wcwidth -y
+conda install -y opencv conda-forge::cython conda-forge::filelock conda-forge::filterpy conda-forge::h5py conda-forge::kornia conda-forge::lap conda-forge::loguru conda-forge::motmetrics conda-forge::tqdm conda-forge::tensorboard conda-forge::tabulate conda-forge::ninja anaconda::scikit-image conda-forge::prettytable anaconda::wcwidth conda-forge::fastapi anaconda::requests conda-forge::configparser
 
-python3 -m pip install yolox 
-python3 -m pip install thop 
-python3 -m pip install cython-bbox 
-python3 -m pip install 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
-conda install conda-forge::fastapi -y
-conda install anaconda::requests -y
-conda install conda-forge::configparser -y
 
+Window:
+build yolox from source on github guide then delete yolox folder
+
+pip install thop visualdl
 pip install fastapi uvicorn pydantic
+
+
+
+bug installing:
+
+cython-bbox
+'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
+
+for window dev 
+bug :       
+    building 'cython_bbox' extension
+      error: Microsoft Visual C++ 14.0 or greater is required. 
+      Get it with "Microsoft C++ Build Tools": https://visualstudio.microsoft.com/visual-cpp-build-tools/
+      [end of output]
+
+
+
+
+
+
+
+Linux:
+python3 -m pip install thop visualdl yolox cython-bbox 'git+https://github.com/cocodataset/cocoapi.git#subdirectory=PythonAPI'
+pip install fastapi uvicorn pydantic
+

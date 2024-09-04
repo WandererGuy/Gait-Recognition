@@ -1,4 +1,4 @@
-name: /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/all_env/env_seg
+name: env_seg
 channels:
   - anaconda
   - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/Paddle

@@ -9,9 +9,16 @@ import json
 from fastapi import FastAPI, HTTPException, Form, Request
 import uvicorn
 
+current_script_directory = os.path.dirname(os.path.abspath(__file__))
 
-host_ip = '10.0.68.103'
-port_num = 8503
+import configparser
+config = configparser.ConfigParser()
+config.read(current_script_directory +'/config.ini')
+host_ip = config['DEFAULT']['host'] 
+rec_port_num = config['DEFAULT']['rec_port_num'] 
+
+
+
 
 app = FastAPI()
 
@@ -135,7 +142,7 @@ async def compare_feat_single(request: Request):
 
 def main():
     print('INITIALIZING FASTAPI SERVER')
-    uvicorn.run("sample_rec:app", host=host_ip, port=int(port_num), reload=True)
+    uvicorn.run("sample_rec:app", host=host_ip, port=int(rec_port_num), reload=True)
 
 if __name__ == "__main__":
     main()

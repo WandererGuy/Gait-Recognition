@@ -18,6 +18,14 @@ save_root = './demo/output/'
 # probe2_video_path  = "./demo/output/InputVideos/probe2.mp4"
 # probe3_video_path  = "./demo/output/InputVideos/probe3.mp4"
 # probe4_video_path  = "./demo/output/InputVideos/probe4.mp4"
+current_script_directory = os.path.dirname(os.path.abspath(__file__))
+
+import configparser
+config = configparser.ConfigParser()
+config.read(current_script_directory +'/config.ini')
+host_ip = config['DEFAULT']['host'] 
+track_port_num = config['DEFAULT']['track_port_num'] 
+
 
 @app.post("/write-result")
 async def write_result(request: Request):
@@ -70,7 +78,7 @@ async def tracking(request: Request):
     
 def main():
     print('INITIALIZING FASTAPI SERVER')
-    uvicorn.run("sample_track:app", host=host_ip, port=int(port_num), reload=True)
+    uvicorn.run("sample_track:app", host=host_ip, port=int(track_port_num), reload=True)
 
 if __name__ == "__main__":
     main()

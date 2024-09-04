@@ -1,4 +1,4 @@
-name: /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/all_env/env_rec
+name: env_rec
 channels:
   - anaconda
   - pytorch
@@ -159,4 +159,4 @@ dependencies:
     - sniffio==1.3.1
     - starlette==0.38.2
     - uvicorn==0.30.6
-prefix: /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/all_env/env_rec
+prefix: E:/ManhT04/GaitRec/Gait-Recognition/OpenGait/all_env

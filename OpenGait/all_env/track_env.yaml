@@ -1,4 +1,4 @@
-name: /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/all_env/env_track
+name: env_track
 channels:
   - pytorch
   - anaconda

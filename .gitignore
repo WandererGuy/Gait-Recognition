@@ -1,7 +1,6 @@
 OpenGait/all_env/env_seg
 OpenGait/all_env/env_track
 OpenGait/all_env/env_rec
-OpenGait/OpenGait/output
 OpenGait/demo/output
 OpenGait/demo/libs/pickle_variables
 OpenGait/demo/checkpoints

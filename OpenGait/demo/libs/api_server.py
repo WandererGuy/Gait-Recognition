@@ -16,6 +16,10 @@ write_result = 'http://10.0.68.103:8501/write-result'
 
 current_script_directory = os.path.dirname(os.path.abspath(__file__))
 
+
+
+
+
 ### only need to change input_video_name (every made folder will follow this name)
 ### put wanna write result video to same video save folder 
 input_video_name = 'gallery.mp4'
@@ -75,11 +79,11 @@ def keys2int(parent_key, sub_key_name):
     parent_key[sub_key_name] = int_keys
     return parent_key
 
-                            ## TRACK SERVER
-# gallery_video_path = os.path.dirname(current_script_directory) + '/output/InputVideos/' + input_video_name
-# path_dict = {'gallery_video_path': gallery_video_path, "video_save_folder": video_save_folder}
-# track_response = requests.post(url_tracking, json=path_dict)
-# pickle_response(track_response, track_output_pickle)
+                            # TRACK SERVER
+gallery_video_path = os.path.dirname(current_script_directory) + '/output/InputVideos/' + input_video_name
+path_dict = {'gallery_video_path': gallery_video_path, "video_save_folder": video_save_folder}
+track_response = requests.post(url_tracking, json=path_dict)
+pickle_response(track_response, track_output_pickle)
 
 
     
@@ -203,36 +207,31 @@ def keys2int(parent_key, sub_key_name):
 
 
 
-                            ### TRACK SERVER 
-with open (compare_output_pickle, 'rb') as file:
-    # Deserialize and retrieve the variable from the file
-    gallery_probe1_result = pickle.load(file)
+#                             ### TRACK SERVER 
+# with open (compare_output_pickle, 'rb') as file:
+#     # Deserialize and retrieve the variable from the file
+#     gallery_probe1_result = pickle.load(file)
 
-    gallery_probe1_result = gallery_probe1_result['output']["gallery_probe1_result"]     
-    probe1_video_path = "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/OutputVideos/1/kien7.mp4"
-    video_save_folder = video_save_folder
+#     gallery_probe1_result = gallery_probe1_result['output']["gallery_probe1_result"]     
+#     probe1_video_path = "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/OutputVideos/1/kien7.mp4"
+#     video_save_folder = video_save_folder
            
                             
-loaded_data = None
+# loaded_data = None
 
-input = {
-    "gallery_probe1_result": gallery_probe1_result,
-    "probe1_video_path": probe1_video_path,
-    "video_save_folder": video_save_folder
-    }
-response = requests.post(write_result, json=input)
-pickle_response(response, final_output_pickle)
-final_resopnse = response.json()
-print (final_resopnse)
-
-
+# input = {
+#     "gallery_probe1_result": gallery_probe1_result,
+#     "probe1_video_path": probe1_video_path,
+#     "video_save_folder": video_save_folder
+#     }
+# response = requests.post(write_result, json=input)
+# pickle_response(response, final_output_pickle)
+# final_resopnse = response.json()
+# print (final_resopnse)
 
 
 
 
 
-# # with open(rec_output_pickle, 'rb') as file:
 
-# #     response = pickle.load(file)
-# #     ls =  response["feat"]["gallery_feat"]["gallery"]
-# #     print (ls)
+
