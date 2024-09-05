@@ -19,6 +19,7 @@ rec_port_num = config['DEFAULT']['rec_port_num']
 
 url_tracking = f'http://{host_ip}:{track_port_num}/tracking'
 url_seg = f'http://{host_ip}:{seg_port_num}/segment'
+url_seg_no_video = f'http://{host_ip}:{seg_port_num}/segment-no-video'
 url_rec = f'http://{host_ip}:{rec_port_num}/extract-sil-function'
 url_compare_multi = f'http://{host_ip}:{rec_port_num}/compare-feat-multi'
 url_compare_single = f'http://{host_ip}:{rec_port_num}/compare-feat-single'
@@ -61,6 +62,17 @@ def seg_service():
         response = requests.post(url_seg, json=track_response_json)
         pickle_response(response, seg_output_pickle)
         print ('saved segment result in path (to send to rec server): ', seg_output_pickle)
+
+def seg_service_no_video(folder_track_path, choose_video_name = "random", tid = 1):
+        track_response_json = { "choose_video_name": choose_video_name,
+                                "tid": tid,
+                                "folder_track_path": folder_track_path,
+                                "video_save_folder": None
+                                 }
+        response = requests.post(url_seg, json=track_response_json)
+        pickle_response(response, seg_output_pickle)
+        print ('saved segment result in path (to send to rec server): ', seg_output_pickle)
+
 
     
 def rec_service():
@@ -136,20 +148,39 @@ def write_result_video():
 
 
 if __name__ == "__main__":
-    print ('start tracking')
-    track_service()
-    print ('done tracking')
-    print ('start segment')
-    seg_service()
-    print ('done segment')
-    print ('start recognition')
-    rec_service()
-    print ('done recognition')
+
+    # print ('start tracking')
+    # track_service()
+    # print ('done tracking')
+    # print ('start segment')
+    # seg_service()
+    # print ('done segment')
+    # print ('start recognition')
+    # rec_service()
+    # print ('done recognition')
     # print ('start compare')
     # compare_multi_probes(gallery_vid_name = 'kien7.mp4', probe_vid_name = 'manh.mp4')
     # print ('done compare')
-    
-    
+
+
+
+########## EVALUATION REC MODEL ################ 
+# MAKING 100 EMBEDS FROM MULTIPLE VIDEOS TO CREATE 100 GALLERY EMBEDS
+# THEN WITH 1 PROBE , WILL SEE WITH 1 PROBE ID , WHICH GALLERY EMBED IT WILL MATCH 
+# GALLERY IS MATERIALS POOL , SO THAT PROBE CAN PICK FROM GALLERY EMBEDS
+    folder_track_path = ''
+    choose_video_name = ''
+    tid = 1 # can choose random 
+    # print ('start segment')
+    seg_service_no_video(folder_track_path, choose_video_name = "random", tid = 1)
+    # print ('done segment')
+    # print ('start recognition')
+    # rec_service()
+    # print ('done recognition')
+    # print ('start compare')
+    # compare_multi_probes(gallery_vid_name = 'kien7.mp4', probe_vid_name = 'manh.mp4')
+    # print ('done compare')
+
     
     '''
     get many video to get 100 embeddings 
