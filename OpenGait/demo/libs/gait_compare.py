@@ -36,7 +36,7 @@ def compareid(data, dict, pid, threshold_value):
     return id, dic_sort
 
 
-def comparefeat(embs, gallery_feat: dict, pid, threshold_value, probe_id):
+def comparefeat(embs, gallery_feat: dict, pid, threshold_value, probe_id, all_compare):
     """Compares the distance between features
 
     Args:
@@ -52,22 +52,21 @@ def comparefeat(embs, gallery_feat: dict, pid, threshold_value, probe_id):
     min = threshold_value
     id = None
     dic={}
-
-    file_txt = open("/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/result_dist.txt", "a")
-
+    # gallery_feat = {'kien7': [{'006': {'undefined': tensor([[[-0.1423, -0.0651,  0.0327,  ...}
+    # gallery_feat[key] = []
+    # gallery_feat[key][0] = subject = {'006': {'undefined': tensor([[[-0.1423, -0.0651,  0.0327,  ...}
     for key in gallery_feat:
-        
+        ### galery feat is a list of dict like  {'028': {'undefined': tensor([[[-0.1423, -0.0651,  0.0327,  ...,
         if key == probe_name:
             continue
+        
         for subject in gallery_feat[key]:
             for type in subject:
                 for view in subject[type]:
                     value = subject[type][view]
                     distance = computedistence(embs, value)
-                    
-                    
-                    
-                    file_txt.write(str(probe_id) +'\t' + str(distance) + "\n")
+                    tmp = round(distance.item(), 5)
+                    all_compare[f'gallery-{type}-probe-{probe_id}'] = tmp
 
                     gid = key + "-" + str(type)
                     gid_distance = (gid, distance)
@@ -81,4 +80,4 @@ def comparefeat(embs, gallery_feat: dict, pid, threshold_value, probe_id):
     # dic = {'gallery-006': tensor(18.9615, device='cuda:0')}
     # id = gallery-006
     # dic_sort = [('gallery-006', tensor(18.9615, device='cuda:0'))]
-    return id, dic_sort
+    return id, dic_sort, all_compare

@@ -7,8 +7,7 @@ from track import *
 from fastapi import FastAPI, HTTPException, Form, Request
 import uvicorn
 
-host_ip = '10.0.68.103'
-port_num = 8501
+
 
 app = FastAPI()
 

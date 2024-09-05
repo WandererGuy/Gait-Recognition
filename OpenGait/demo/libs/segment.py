@@ -8,7 +8,8 @@ import shutil
 import math
 import numpy as np
 from tqdm import tqdm
-
+import time 
+import paddle 
 # from tracking_utils.predictor import Predictor
 # from yolox.utils import fuse_model, get_model_info
 # from loguru import logger
@@ -35,10 +36,10 @@ print ('Paddle compiled with cuda:', env_info['Paddle compiled with cuda'] )
 print ('GPUs used:', env_info['GPUs used'])
 config_gpu = True if env_info['Paddle compiled with cuda'] \
     and env_info['GPUs used'] else False
-print ('config_gpu (use gpu):', config_gpu)
+print ('config_gpu (use gpu) available:', config_gpu)
 
 
-config_gpu = False # i set to cpu becuase cpu is faster than gpu lol , set to true if you want to use gpu
+config_gpu = True # i set to cpu becuase cpu is faster than gpu lol , set to true if you want to use gpu
 print ('decide to use gpu for paddle segmentation:', config_gpu)
 
 def imageflow_demo(video_path, track_result, sil_save_path):
@@ -51,7 +52,9 @@ def imageflow_demo(video_path, track_result, sil_save_path):
     Returns:
         Path: The directory of silhouette
     """
-
+    device = config_gpu
+    
+    
     cap = cv2.VideoCapture(video_path)
     width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)  # float
     height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)  # float
@@ -102,7 +105,10 @@ def imageflow_demo(video_path, track_result, sil_save_path):
                     tmp_new[int(height):int(height+new_h),int(width):int(width+new_w),:] = tmp
                     tmp_new = tmp_new.astype(np.uint8)
                     tmp = cv2.resize(tmp_new,(192,192))
+
+                    start = time.time()
                     seg_image(tmp, seg_cfgs["model"]["seg_model"], save_name, savesil_path, config_gpu)
+                    print ("seg_process_time 1 frame ", time.time() - start)
 
             ch = cv2.waitKey(1)
             if ch == 27 or ch == ord("q") or ch == ord("Q"):

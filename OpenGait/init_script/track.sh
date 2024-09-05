@@ -3,12 +3,15 @@
 # Đọc đường dẫn từ tập tin cấu hình
 CONFIG_FILE="OpenGait/init_script/config.ini"
 # Sử dụng lệnh grep và cut để lấy giá trị từ tập tin cấu hình
-CONDA_PATH=$(grep 'conda_path' "$CONFIG_FILE" | cut -d' ' -f3)
+# CONDA_PATH=$(grep 'conda_path' "$CONFIG_FILE" | cut -d' ' -f3)
+source $CONFIG_FILE
+
 echo "found config file"
 SERVER_PATH=$(pwd)
 
 # Kích hoạt Conda
-source "$CONDA_PATH"
+echo $CONDA_PATH
+source $CONDA_PATH
 eval "$(conda shell.bash hook)"
 
 # Kích hoạt môi trường Conda

@@ -88,12 +88,13 @@ def makedirs(save_dir):
     if not os.path.exists(dirname):
         os.makedirs(dirname)
 
-
 def seg_image(img, config, save_name, savesil_path, config_gpu):
     
 
     predictor = Predictor_opengait(config, config_gpu)
     bg_img = 255 * np.ones(img.shape)
+    
+    
     out_img, out_mask = predictor.run(img, bg_img)
 
     therehold = 80

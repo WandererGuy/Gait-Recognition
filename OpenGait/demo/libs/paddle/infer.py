@@ -127,7 +127,7 @@ class Predictor_opengait:
         input_handle.copy_from_cpu(input_data)
         # if self.args.test_speed:
         #     start = time.time()
-
+        
         self.predictor.run()
 
         # if self.args.test_speed:

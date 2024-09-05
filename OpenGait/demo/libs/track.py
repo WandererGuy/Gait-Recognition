@@ -43,6 +43,7 @@ def get_color(idx):
 
 def loadckpt(exp):
     device = torch.device("cuda" if track_cfgs["device"] == "gpu" else "cpu")
+    print ("tracking using device: ", device)
     model = exp.get_model().to(device)
     logger.info("Model Summary: {}".format(get_model_info(model, exp.test_size)))
     model.eval()
