@@ -36,37 +36,37 @@ def compareid(data, dict, pid, threshold_value):
     return id, dic_sort
 
 
-def comparefeat(embs, gallery_feat: dict, pid, threshold_value, probe_id, all_compare):
+def comparefeat(embs, probe_feat: dict, pid, threshold_value, gallery_id, all_compare):
     """Compares the distance between features
 
     Args:
         embs (Tensor): Embeddings of person with pid
-        gallery_feat (dict): Dictionary of features from gallery
-        pid (str): The id of person in probe
+        probe_feat (dict): Dictionary of features from probe
+        pid (str): The id of person in gallery
         threshold_value (int): Threshold
     Returns:
-        id (str): The id in gallery
+        id (str): The id in probe
         dic_sort (dict): Recognition result sorting dictionary
     """
-    probe_name = pid.split("-")[0]
+    gallery_name = pid.split("-")[0]
     min = threshold_value
     id = None
     dic={}
-    # gallery_feat = {'kien7': [{'006': {'undefined': tensor([[[-0.1423, -0.0651,  0.0327,  ...}
-    # gallery_feat[key] = []
-    # gallery_feat[key][0] = subject = {'006': {'undefined': tensor([[[-0.1423, -0.0651,  0.0327,  ...}
-    for key in gallery_feat:
+    # probe_feat = {'kien7': [{'006': {'undefined': tensor([[[-0.1423, -0.0651,  0.0327,  ...}
+    # probe_feat[key] = []
+    # probe_feat[key][0] = subject = {'006': {'undefined': tensor([[[-0.1423, -0.0651,  0.0327,  ...}
+    for key in probe_feat:
         ### galery feat is a list of dict like  {'028': {'undefined': tensor([[[-0.1423, -0.0651,  0.0327,  ...,
-        if key == probe_name:
+        if key == gallery_name:
             continue
         
-        for subject in gallery_feat[key]:
+        for subject in probe_feat[key]:
             for type in subject:
                 for view in subject[type]:
                     value = subject[type][view]
                     distance = computedistence(embs, value)
                     tmp = round(distance.item(), 5)
-                    all_compare[f'gallery-{type}-probe-{probe_id}'] = tmp
+                    all_compare[f'probe:{type}-gallery:{gallery_id}'] = tmp
 
                     gid = key + "-" + str(type)
                     gid_distance = (gid, distance)
@@ -77,7 +77,7 @@ def comparefeat(embs, gallery_feat: dict, pid, threshold_value, probe_id, all_co
     dic_sort= sorted(dic.items(), key=lambda d:d[1], reverse = False)
     if id is None:
         print("############## no id #####################")
-    # dic = {'gallery-006': tensor(18.9615, device='cuda:0')}
-    # id = gallery-006
-    # dic_sort = [('gallery-006', tensor(18.9615, device='cuda:0'))]
+    # dic = {'probe-006': tensor(18.9615, device='cuda:0')}
+    # id = probe-006
+    # dic_sort = [('probe-006', tensor(18.9615, device='cuda:0'))]
     return id, dic_sort, all_compare

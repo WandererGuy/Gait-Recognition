@@ -60,10 +60,11 @@ def loadckpt(exp):
 
 exp = get_exp(track_cfgs["model"]["exp_file"], None)
 model = loadckpt(exp)
+print ("load model done")
 
 def track(video_path, video_save_folder):
     """Tracks person in the input video
-
+    
     Args:
         video_path (Path): Path of input video
         video_save_folder (Path): Tracking video storage root path after processing

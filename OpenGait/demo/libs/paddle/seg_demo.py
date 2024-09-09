@@ -100,7 +100,6 @@ def seg_image(img, config, save_name, savesil_path, config_gpu):
     therehold = 80
     temp = out_mask < therehold
     out_mask = np.where(temp, 0, 255)
-    print (savesil_path)
     if not os.path.exists(savesil_path):
         os.makedirs(savesil_path)
     savesil_name = os.path.join(savesil_path, save_name)

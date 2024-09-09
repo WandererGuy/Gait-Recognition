@@ -83,3 +83,29 @@ def plot_distance(target_distance_dict):
 def plot_target_distance(distance_file_path, target_gallery_id):
     target_distance_dict = extract_target(distance_file_path, target_gallery_id)  
     plot_distance(target_distance_dict) 
+
+def check_name_in_list(my_list, element_to_check):
+    # Check if the element is in the list
+    if element_to_check in my_list:
+        # Count occurrences
+        count = my_list.count(element_to_check)
+        return count
+    else:
+        return 0
+
+
+def display_all_distance(data: list):
+    dist_ls = []
+    dummy_value = 1000
+    for item in data:
+        distance = item['distance']
+        if item['gallery_name'] == item["probe_name"] and int(distance) < 0.1:
+            dist_ls.append(dummy_value) 
+        else:
+            dist_ls.append(distance) 
+    sorted_ls = sorted(dist_ls)
+    ranking_ls = []
+    for i in range (len(sorted_ls)):
+        index = dist_ls.index(sorted_ls[i])
+        ranking_ls.append(data[index])
+    return ranking_ls

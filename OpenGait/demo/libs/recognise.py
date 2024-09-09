@@ -60,51 +60,42 @@ def gait_sil(sils, embs_save_path):
         feats[id].append(feat)    
     return feats    
 
-def gaitfeat_compare(probe_feat:dict, gallery_feat:dict, mode):
-    """Compares the feature between probe and gallery
+def gaitfeat_compare(gallery_feat:dict, probe_feat:dict, mode):
+    """Compares the feature between gallery and probe
     
     Args:
-        probe_feat (dict): Dictionary of probe's features
         gallery_feat (dict): Dictionary of gallery's features
+        probe_feat (dict): Dictionary of probe's features
     Returns:
-        pg_dicts (dict): The id of probe corresponds to the id of gallery
+        pg_dicts (dict): The id of gallery corresponds to the id of probe
     """
-    
-    
-    item = list(probe_feat.keys())
-    probe = item[0]
+    item = list(gallery_feat.keys())
+    gallery = item[0]
     pg_dict = {}
     pg_dicts = {}
     dist_dict = {}
     all_compare = {}
     if mode == "multi":   
-
-        for inputs in probe_feat[probe]:
+        for inputs in gallery_feat[gallery]:
             # input is like {'016': {'undefined': tensor([[[-0.1459,]]]
             number = list(inputs.keys())[0]
-            probeid = probe + "-" + number
-            # gallery feat has many keys like '006'
-            galleryid, idsdict, all_compare = gc.comparefeat(inputs[number]['undefined'], gallery_feat, probeid, 100, number, all_compare)
-            # [('gallery-006', tensor(18.9615, device='cuda:0'))] 
-            pg_dict[probeid] = galleryid
-        # pg_dicts[probeid] = idsdict
-        # print("=================== pg_dicts ===================")
-        # print(pg_dicts)
+            galleryid = gallery + "-" + number
+            # probe feat has many keys like '006'
+            probeid, idsdict, all_compare = gc.comparefeat(inputs[number]['undefined'], probe_feat, galleryid, 100, number, all_compare)
+            # [('probe-006', tensor(18.9615, device='cuda:0'))] 
+            pg_dict[galleryid] = probeid
+        # pg_dicts[galleryid] = idsdict
     else:
-        for inputs in probe_feat[probe]:
-    
+        for inputs in gallery_feat[gallery]:
             number = list(inputs.keys())[0]
-            probeid = probe + "-" + number
-            galleryid, idsdict, all_compare = gc.comparefeat(inputs[number]['undefined'], gallery_feat, probeid, 100, number)
-            # [('gallery-006', tensor(18.9615, device='cuda:0'))] 
-            dist_dict[probeid] = idsdict
-            pg_dict[probeid] = None # all to None id 
+            galleryid = gallery + "-" + number
+            probeid, idsdict, all_compare = gc.comparefeat(inputs[number]['undefined'], probe_feat, galleryid, 100, number)
+            # [('probe-006', tensor(18.9615, device='cuda:0'))] 
+            dist_dict[galleryid] = idsdict
+            pg_dict[galleryid] = None # all to None id 
         key_with_smallest_value = min(dist_dict, key=dist_dict.get)
-
-        pg_dict[key_with_smallest_value] = galleryid
-        # pg_dicts[probeid] = idsdict
-        # print("=================== pg_dicts ===================")
-        # print(pg_dicts)
+        pg_dict[key_with_smallest_value] = probeid
+        # pg_dicts[galleryid] = idsdict
     return pg_dict, all_compare
 
 def extract_sil(sil, save_path):
@@ -122,7 +113,7 @@ def extract_sil(sil, save_path):
     return video_feat
 
 
-def compare(probe_feat, gallery_feat, mode = "multi"):
+def compare(gallery_feat, probe_feat, mode = "multi"):
     """Recognizes  the features between probe and gallery
 
     Args:
@@ -132,8 +123,8 @@ def compare(probe_feat, gallery_feat, mode = "multi"):
         pgdict (dict): The id of probe corresponds to the id of gallery
     """
     logger.info("begin recognising")
-    pgdict, all_compare = gaitfeat_compare(probe_feat, gallery_feat, mode = mode)
+    pgdict, all_compare = gaitfeat_compare(gallery_feat, probe_feat, mode = mode)
     logger.info("recognise Done")
-    print("================= probe - gallery aka pgdict ===================")
-    print(pgdict)
+    # print("================= probe - gallery aka pgdict ===================")
+    # print(pgdict)
     return pgdict, all_compare

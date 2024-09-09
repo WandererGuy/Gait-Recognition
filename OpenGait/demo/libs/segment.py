@@ -45,25 +45,19 @@ print ('decide to use gpu for paddle segmentation:', config_gpu)
 def imageflow_demo_no_video(video_name, sil_save_path, tid, folder_track_path):
     # whole folder for 1 person , so 1 tid 
     save_video_name = video_name
-
     save_video_name = save_video_name.split(".")[0]
+    tidstr = "{:03d}".format(tid)
     savesil_path = osp.join(sil_save_path, save_video_name, tidstr, "undefined")
-
-    for id, filename in enumerate(os.listdir(folder_track_path)):
+    for id, filename in enumerate(tqdm(sorted(os.listdir(folder_track_path)))):
         if id % 4 == 0:
-            tidstr = "{:03d}".format(tid)
-
             file_path = os.path.join(folder_track_path, filename)
             # Read the image from a file
             frame = cv2.imread(file_path)
-
             tmp = frame
-
             save_name = "{:03d}-{:03d}.png".format(tid, id)
             # Get the dimensions of the image
             # no need to extend crop like normal 
             new_h, new_w, _ = tmp.shape
-
             side = max(new_w,new_h)
             tmp_new = [[[255,255,255]]*side]*side
             tmp_new = np.array(tmp_new)
@@ -72,18 +66,13 @@ def imageflow_demo_no_video(video_name, sil_save_path, tid, folder_track_path):
             tmp_new[int(height):int(height+new_h),int(width):int(width+new_w),:] = tmp
             tmp_new = tmp_new.astype(np.uint8)
             tmp = cv2.resize(tmp_new,(192,192))
-
             start = time.time()
             seg_image(tmp, seg_cfgs["model"]["seg_model"], save_name, savesil_path, config_gpu)
-            print ("seg_process_time 1 frame ", time.time() - start)
-
+            # print ("seg_process_time 1 frame ", time.time() - start)
             ch = cv2.waitKey(1)
             if ch == 27 or ch == ord("q") or ch == ord("Q"):
                 break
     return Path(sil_save_path, save_video_name)
-
-
-
 
 def imageflow_demo(video_path, track_result, sil_save_path):
     """Cuts the video image according to the tracking result to obtain the silhouette
@@ -120,6 +109,7 @@ def imageflow_demo(video_path, track_result, sil_save_path):
                 for tidxywh in track_result[frame_id]:
 
                     '''
+                    example 
                     [[2, 1574.658954852634, 229.29097154541995, 132.40578286636776, 318.3120958008027], 
                     [1, 636.3199330290356, 353.5785779473755, 408.22906522934807, 1056.940301610632], 
                     [3, 683.3798232245281, 881.7715030017587, 490.68301364590474, 687.7163959408705]]
@@ -164,7 +154,7 @@ def imageflow_demo(video_path, track_result, sil_save_path):
 
                     start = time.time()
                     seg_image(tmp, seg_cfgs["model"]["seg_model"], save_name, savesil_path, config_gpu)
-                    print ("seg_process_time 1 frame ", time.time() - start)
+                    # print ("seg_process_time 1 frame ", time.time() - start)
 
             ch = cv2.waitKey(1)
             if ch == 27 or ch == ord("q") or ch == ord("Q"):
