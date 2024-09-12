@@ -1,4 +1,11 @@
 import pickle
+import os
+def pickle_response_modified(response, response_pickle_file):
+    
+    with open(response_pickle_file, 'wb') as file:
+        # Serialize and write the variable to the file
+        pickle.dump(response, file)
+
 
 def pickle_response(response, response_pickle_file):
     
@@ -14,7 +21,9 @@ def pickle_response(response, response_pickle_file):
 
 def keys2int(parent_key, sub_key_name):
     # Access the 'gallery_track_result' dictionary
-    
+    print ('========================')
+    print (parent_key)
+    print (sub_key_name)
     result = parent_key[sub_key_name]
 
     # Convert all keys to integers
@@ -109,3 +118,7 @@ def display_all_distance(data: list):
         index = dist_ls.index(sorted_ls[i])
         ranking_ls.append(data[index])
     return ranking_ls
+
+def change_pickle_path(pickle_path, saved_pickle_folder_name):
+    new_pickle_path = os.path.join(pickle_path, saved_pickle_folder_name)
+    return new_pickle_path

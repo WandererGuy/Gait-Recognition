@@ -1,0 +1,13 @@
+gallery-001-probe-012 : 19.52853
+gallery-001-probe-015 : 19.95822
+gallery-001-probe-005 : 17.56704
+gallery-001-probe-010 : 20.07856
+gallery-001-probe-007 : 14.27324
+gallery-001-probe-006 : 13.8849
+gallery-001-probe-011 : 20.34223
+gallery-001-probe-001 : 17.26533
+gallery-001-probe-008 : 14.66132
+gallery-001-probe-004 : 21.21179
+gallery-001-probe-003 : 23.29622
+gallery-001-probe-002 : 14.426
+gallery-001-probe-016 : 19.26593

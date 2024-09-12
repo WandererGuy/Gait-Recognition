@@ -122,6 +122,7 @@ def track(video_path, video_save_folder):
                         if frame_id not in track_results:
                             track_results[frame_id] = []
                         track_results[frame_id].append([tid, tlwh[0], tlwh[1], tlwh[2], tlwh[3]])
+                        # id , x, y , w, h
                         results.append(
                             f"{frame_id},{tid},{tlwh[0]:.2f},{tlwh[1]:.2f},{tlwh[2]:.2f},{tlwh[3]:.2f},{t.score:.2f},-1,-1,-1\n"
                         )

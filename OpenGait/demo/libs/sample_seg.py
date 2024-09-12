@@ -56,6 +56,7 @@ async def segment(request: Request):
     video_name = video_path.split("/")[-1]
     video_new_path = save_root+'/GaitSilhouette/' + video_name.split(".")[0]
     exist = os.path.exists(video_new_path) 
+    
 
     print("segment folder exists: " ,exist)
     if exist:
