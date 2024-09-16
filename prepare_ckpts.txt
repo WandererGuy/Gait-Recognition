@@ -11,5 +11,5 @@ unzip human_pp_humansegv2_mobile_192x192_inference_model_with_softmax.zip
 cd ..
 mkdir gait_model
 cd gait_model/
-wget https://github.com/ShiqiYu/OpenGait/releases/download/v2.0/pretrained_grew_gaitbase.zip
-unzip -j pretrained_grew_gaitbase.zip
+wget https://github.com/ShiqiYu/OpenGait/releases/download/v2.0/pretrain_gait3d_gaitbase.zip
+unzip -j pretrained_gait3d_gaitbase.zip

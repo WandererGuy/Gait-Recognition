@@ -1,5 +1,18 @@
 import pickle
 import os
+import uuid
+def generate_unique_filename(UPLOAD_FOLDER, extension="txt"):
+    if extension != None:
+        filename = f"{uuid.uuid4()}.{extension}"
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        if not os.path.exists(file_path):
+            return filename
+    else:
+        filename = f"{uuid.uuid4()}"
+        file_path = os.path.join(UPLOAD_FOLDER, filename)
+        if not os.path.exists(file_path):
+            return filename 
+
 def pickle_response_modified(response, response_pickle_file):
     
     with open(response_pickle_file, 'wb') as file:

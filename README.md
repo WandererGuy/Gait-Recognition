@@ -2,8 +2,7 @@ prepare checkpoints
 see prepare_ckpts.txt
 
 prepare env 
-install all yaml (linux/window)
-
-don
 
 run the init script 
+
+any bug: fix path correct

@@ -38,17 +38,6 @@ gait_feature_folder = parent_folder + '/output/GaitFeatures/'
 track_video_save_folder = parent_folder + '/output/OutputVideos/' 
 
 
-def generate_unique_filename(UPLOAD_FOLDER, extension="pickle"):
-    if extension != None:
-        filename = f"{uuid.uuid4()}.{extension}"
-        file_path = os.path.join(UPLOAD_FOLDER, filename)
-        if not os.path.exists(file_path):
-            return filename
-    else:
-        filename = f"{uuid.uuid4()}"
-        file_path = os.path.join(UPLOAD_FOLDER, filename)
-        if not os.path.exists(file_path):
-            return filename 
 
 
 

@@ -86,7 +86,6 @@ async def compare_multi_gallery_video(request: Request):
                     if gallery_feat == {}:
                         filename = gallery_feat_path.split("/")[-1]
                         logging.warning(f'{filename} gait feature empty because extracted feature extraction interuptted before or do not have person in it.')
-                        print ('gayyyyyy')
                         continue
             else:
                 filename = gallery_feat_path.split("/")[-1]
@@ -278,6 +277,12 @@ async def compare_multi_gallery_video(request: Request):
 
 def main():
     print('INITIALIZING FASTAPI SERVER')
+        # Check if GPU is available
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    # Print the device
+    print(f"Device being used: {device}")
+
     uvicorn.run("sample_rec:app", host=host_ip, port=int(rec_port_num), reload=True)
 
 if __name__ == "__main__":
