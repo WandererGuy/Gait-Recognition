@@ -135,3 +135,18 @@ def display_all_distance(data: list):
 def change_pickle_path(pickle_path, saved_pickle_folder_name):
     new_pickle_path = os.path.join(pickle_path, saved_pickle_folder_name)
     return new_pickle_path
+
+
+import json 
+class NumpyEncoder(json.JSONEncoder): # turn dict with np array to be jsonizable
+    # if need tensor send through http -> res = json.dumps(res, cls=NumpyEncoder)
+    # here i have pickle cuda tensor so no need this 
+    """ Special json encoder for numpy types """
+    def default(self, obj):
+        if isinstance(obj, np.integer):
+            return int(obj)
+        elif isinstance(obj, np.floating):
+            return float(obj)
+        elif isinstance(obj, np.ndarray):
+            return obj.tolist()
+        return json.JSONEncoder.default(self, obj)

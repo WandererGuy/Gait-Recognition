@@ -36,7 +36,7 @@ parent_folder = os.path.dirname(current_script_directory)
 pickle_path = os.path.join(current_script_directory,"pickle_variables")
 gait_feature_folder = parent_folder + '/output/GaitFeatures/'
 track_video_save_folder = parent_folder + '/output/OutputVideos/' 
-
+pickle_path_seg = os.path.join(pickle_path, 'segment')
 
 
 

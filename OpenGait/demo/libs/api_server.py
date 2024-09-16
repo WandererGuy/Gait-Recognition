@@ -143,11 +143,11 @@ def write_result_video(data):
              
 
 if __name__ == "__main__":
-    with open ('E:/ManhT04/GaitRec/Gait-Recognition/OpenGait/demo/libs/pickle_variables/manh_probe_helmet/track_output.pickle', 'rb') as file:
-        track_response_json = pickle.load(file)
-        track_response_json["video_path"] = 'E:/ManhT04/GaitRec/Gait-Recognition/OpenGait/demo/output/InputVideos/manh_probe_helmet.mp4'
-    link = f'http://{host_ip}:8110/seg-server'
-    response = requests.post(link, json=track_response_json)
+    track_result_path = 'E:/ManhT04/GaitRec/Gait-Recognition/OpenGait/demo/libs/pickle_variables/manh_probe_helmet/track_output.pickle'
+    video_path = 'E:/ManhT04/GaitRec/Gait-Recognition/OpenGait/demo/output/InputVideos/manh_probe_helmet.mp4'
+    res = {"track_result_path": track_result_path, "video_path"  : video_path}
+    link = f'http://{host_ip}:8110/seg-video'
+    response = requests.post(link, json=res)
     print (response.text)
     # res = response.json()
     # data = {"data": res["data"]}
