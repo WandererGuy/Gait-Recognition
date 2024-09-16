@@ -32,19 +32,16 @@ def pickle_response(response, response_pickle_file):
         # Serialize and write the variable to the file
         pickle.dump(response, file)
 
-def keys2int(parent_key, sub_key_name):
+def keys2int(dict, sub_key_name):
     # Access the 'gallery_track_result' dictionary
-    print ('========================')
-    print (parent_key)
-    print (sub_key_name)
-    result = parent_key[sub_key_name]
+    tmp = dict[sub_key_name]
 
     # Convert all keys to integers
-    int_keys = {int(k): v for k, v in result.items()}
+    int_keys = {int(k): v for k, v in tmp.items()}
 
     # Replace the original dictionary with the modified one
-    parent_key[sub_key_name] = int_keys
-    return parent_key
+    dict[sub_key_name] = int_keys
+    return dict
 
 def get_target(text):
     # gallery-005-probe-011 : 17.2616
@@ -150,3 +147,6 @@ class NumpyEncoder(json.JSONEncoder): # turn dict with np array to be jsonizable
         elif isinstance(obj, np.ndarray):
             return obj.tolist()
         return json.JSONEncoder.default(self, obj)
+    
+def fix_path(path):
+    return path.replace('\\\\','/').replace('\\','/')

@@ -20,7 +20,6 @@ import torch.utils.data as tordata
 from .transform import get_transform
 from utils import get_valid_args, is_list, is_dict, np2var, ts2np, list2var, get_attr_from, is_list_or_tuple
 from .dataset import DataSet
-
 model_cfgs = {  
     # "gait_model": "./demo/checkpoints/gait_model/Baseline-250000.pt"
     "gait_model": "./demo/checkpoints/gait_model/Gait3D/Baseline/GaitBase_DA/checkpoints/GaitBase_DA-60000.pt"

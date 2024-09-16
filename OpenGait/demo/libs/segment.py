@@ -20,27 +20,17 @@ from pretreatment import pretreat, imgs2inputs
 sys.path.append((os.path.dirname(os.path.abspath(__file__) )) + "/paddle/")
 from seg_demo import seg_image
 # from yolox.exp import get_exp
+from parameters import config_gpu, seg_cfgs
 
-seg_cfgs = {  
-    "model":{
-        "seg_model" : "./demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml",
-    },
-    "gait":{
-        "dataset": "GREW",
-    }
-    }
 from paddleseg.utils import get_sys_env, logger, get_image_list
 
-env_info = get_sys_env()
-print ('Paddle compiled with cuda:', env_info['Paddle compiled with cuda'] )
-print ('GPUs used:', env_info['GPUs used'])
-config_gpu = True if env_info['Paddle compiled with cuda'] \
-    and env_info['GPUs used'] else False
-print ('config_gpu (use gpu) available:', config_gpu)
-
-
-config_gpu = True # i set to cpu becuase cpu is faster than gpu lol , set to true if you want to use gpu
-print ('decide to use gpu for paddle segmentation:', config_gpu)
+def check_gpu_available():
+    env_info = get_sys_env()
+    print ('Paddle compiled with cuda:', env_info['Paddle compiled with cuda'] )
+    print ('GPUs used:', env_info['GPUs used'])
+    config_gpu = True if env_info['Paddle compiled with cuda'] \
+        and env_info['GPUs used'] else False
+    print ('config_gpu (use gpu) available:', config_gpu)
 
 def imageflow_demo_no_video(video_name, sil_save_path, tid, folder_track_path):
     # whole folder for 1 person , so 1 tid 
@@ -84,7 +74,6 @@ def imageflow_demo_modified(video_path, track_result, sil_save_path, save_video_
     Returns:
         Path: The directory of silhouette
     """
-    device = config_gpu
     
     
     cap = cv2.VideoCapture(video_path)
@@ -165,7 +154,7 @@ def imageflow_demo_modified(video_path, track_result, sil_save_path, save_video_
     return Path(sil_save_path, save_video_name)
 
 
-def imageflow_demo(video_path, track_result, sil_save_path):
+def imageflow_demo(video_path, track_result, sil_save_path, save_video_name):
     """Cuts the video image according to the tracking result to obtain the silhouette
 
     Args:
@@ -175,7 +164,6 @@ def imageflow_demo(video_path, track_result, sil_save_path):
     Returns:
         Path: The directory of silhouette
     """
-    device = config_gpu
     
     
     cap = cv2.VideoCapture(video_path)
@@ -184,9 +172,9 @@ def imageflow_demo(video_path, track_result, sil_save_path):
     frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
     frame_id = 0
     fps = cap.get(cv2.CAP_PROP_FPS)
-    save_video_name = video_path.split("/")[-1]
+    # save_video_name = video_path.split("/")[-1]
 
-    save_video_name = save_video_name.split(".")[0]
+    # save_video_name = save_video_name.split(".")[0]
     results = []
     ids = list(track_result.keys()) # ids are frame id list 
 
@@ -196,7 +184,6 @@ def imageflow_demo(video_path, track_result, sil_save_path):
     
         if ret_val:
             if frame_id in ids and frame_id%4==0: # crop out of frame track target every 4 frames 
-
                 for tidxywh in track_result[frame_id]:
 
                     '''
@@ -289,14 +276,13 @@ def getsil(video_path, sil_save_path):
                 64, False, seg_cfgs["gait"]["dataset"])
     return inputs
 
-def getsil_no_video(video_name, sil_save_path):
-    inputs = imgs2inputs(Path(sil_save_path, video_name), 
+def getsil_no_video(sil_save_path):
+    inputs = imgs2inputs(Path(sil_save_path), 
                 64, False, seg_cfgs["gait"]["dataset"])
     return inputs
 
-def getsil_modified(save_video_name, sil_save_path):
-    sil_save_name = save_video_name
-    inputs = imgs2inputs(Path(sil_save_path, sil_save_name.split(".")[0]), 
+def getsil_modified(sil_save_path):
+    inputs = imgs2inputs(Path(sil_save_path), 
                 64, False, seg_cfgs["gait"]["dataset"])
     return inputs
 

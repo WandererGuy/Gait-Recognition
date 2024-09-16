@@ -26,7 +26,6 @@ gait_feat_folder = gait_feat_folder + '/output/GaitFeatures/'
 app = FastAPI()
 
 
-
 def get_gait_feat(feat_dict:dict):
     all_embs = {}
     for key, value in feat_dict.items():
