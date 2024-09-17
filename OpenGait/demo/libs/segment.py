@@ -299,6 +299,5 @@ def seg_modified(video_path, track_result, sil_save_path, save_video_name):
     """
     
     sil_save_path = imageflow_demo(video_path, track_result, sil_save_path, save_video_name)
-
     inputs = imgs2inputs(Path(sil_save_path), 64, False, seg_cfgs["gait"]["dataset"])
     return inputs
