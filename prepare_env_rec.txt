@@ -12,3 +12,5 @@ pip install tqdm pyyaml tensorboard opencv-python kornia einops imageio matplotl
 pip install fastapi uvicorn pydantic python-multipart
 
 conda env export -p E:\ManhT04\GaitRec\Gait-Recognition\OpenGait\all_env\env_rec > window_environment.yml
+
+conda env export -p E:\ManhT04\GaitRec\Gait-Recognition\OpenGait\all_env\env_track > track_env.yaml
