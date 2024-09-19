@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import List
 
 current_script_directory = os.path.dirname(os.path.abspath(__file__))
+parent_folder = os.path.dirname(current_script_directory)
 
 config = configparser.ConfigParser()
 config.read(current_script_directory +'/config.ini')
@@ -24,31 +25,16 @@ rec_port_num = config['DEFAULT']['rec_port_num']
 save_root = './demo/output/'
 gait_feat_folder = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 pickle_path = os.path.join(current_script_directory,"pickle_variables")
-
 compare_session_folder = os.path.join(pickle_path, 'CompareSession/')
 pickle_path_rec = os.path.join(pickle_path, "embeddings_db")
+os.makedirs(save_root, exist_ok=True)
+os.makedirs(pickle_path, exist_ok=True)
 os.makedirs(pickle_path_rec, exist_ok=True)
+os.makedirs(compare_session_folder, exist_ok=True)
+
 app = FastAPI()
-parent_folder = os.path.dirname(current_script_directory)
 # gait_feature_folder = parent_folder + '/output/GaitFeatures/'
 
-
-# def get_gait_feat(feat_dict:dict):
-#     all_embs = {}
-#     for key, value in feat_dict.items():
-#         path = os.path.join(gait_feat_folder,key,value,'undefined','undefined.pkl')
-#         embs = pickle.load(file = open(path, 'rb'))
-#         all_embs[f'{key}_{value}'] = embs
-#     return all_embs   
-
-def computedistence(x, y):
-    distance = torch.sqrt(torch.sum(torch.square(x - y)))
-    return distance
-
-def str2dict(string_dict):
-    # actual_dict = ast.literal_eval(string_dict)
-    actual_dict = json.loads(string_dict)
-    return actual_dict
 @app.post("/extract-sil-function")
 async def extract_sil_function(sil_pickle_path: str = Form(...)):
     rec_output_pickle = os.path.join(pickle_path_rec, Path(sil_pickle_path).name)
@@ -79,9 +65,6 @@ async def extract_sil_function(sil_pickle_path: str = Form(...)):
                 "result": None
                 } 
     return res
-
-
-
 
 @app.post("/compare-embeddings")
 async def compare_embeddings(
@@ -163,7 +146,18 @@ def compare_multi_gallery_video(data: dict):
 
 
 
+def main():
+    print('INITIALIZING FASTAPI SERVER')
+        # Check if GPU is available
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+    # Print the device
+    print(f"Device being used: {device}")
+
+    uvicorn.run("sample_rec:app", host=host_ip, port=int(rec_port_num), reload=True)
+
+if __name__ == "__main__":
+    main()
 
 
 
@@ -591,15 +585,3 @@ def compare_multi_gallery_video(data: dict):
 
 #     return {"output": output}        
 
-def main():
-    print('INITIALIZING FASTAPI SERVER')
-        # Check if GPU is available
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    # Print the device
-    print(f"Device being used: {device}")
-
-    uvicorn.run("sample_rec:app", host=host_ip, port=int(rec_port_num), reload=True)
-
-if __name__ == "__main__":
-    main()

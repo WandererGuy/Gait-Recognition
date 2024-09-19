@@ -14,6 +14,7 @@ config.read(current_script_directory +'/config.ini')
 host_ip = config['DEFAULT']['host'] 
 seg_port_num = config['DEFAULT']['seg_port_num'] 
 parent_dir = os.path.dirname(current_script_directory)
+
 pickle_path = os.path.join(current_script_directory,"pickle_variables")
 pickle_path_seg = os.path.join(pickle_path, 'segment')
 save_root = os.path.join(parent_dir, 'output')
@@ -27,37 +28,6 @@ os.makedirs(sil_save_path, exist_ok=True)
 
 app = FastAPI()
     
-# @app.post("/segment-video") 
-# # have track result , have video
-# async def segment_video(video_path: str = Form(...), track_pickle_path: str = Form(...), frame_skip_num: int = Form(...)):
-#     video_path = fix_path(video_path)
-#     track_pickle_path = fix_path(track_pickle_path)
-#     frame_rate_segment = frame_skip_num + 1 
-
-#     with open(track_pickle_path, 'rb') as file:
-#         track_response_json = pickle.load(file)
-#         track_result = keys2int(track_response_json)
-#     save_video_name = generate_unique_filename(UPLOAD_FOLDER = sil_save_path, extension=None)
-#     silhouette = seg_modified(video_path, track_result, sil_save_path, save_video_name, frame_rate_segment)
-#     segment_folder = os.path.join(sil_save_path,save_video_name)
-#     sil_pickle_path = os.path.join(pickle_path_seg,save_video_name)
-#     with open(sil_pickle_path, 'wb') as file:
-#         pickle.dump(silhouette, file)
-#     segment_folder = fix_path(segment_folder)
-#     sil_pickle_path = fix_path(sil_pickle_path)
-#     res = {
-#             "status": 1,
-#             "error_code": None,
-#             "error_message": None,
-#             "result": 
-#                 {
-#            "segment_folder_path": segment_folder, 
-#            'sil_pickle_path': sil_pickle_path
-#                 }
-#         }
-#     print ('Done Segment')
-#     return res
-
 
 @app.post("/extract-segment-folder") 
 # already segment before , have segment folder
@@ -176,6 +146,38 @@ async def segment_adding_frame(image_path: str = Form(...),
         }    
     print ('Done Segment')
     return res
+
+# @app.post("/segment-video") 
+# # have track result , have video
+# async def segment_video(video_path: str = Form(...), track_pickle_path: str = Form(...), frame_skip_num: int = Form(...)):
+#     video_path = fix_path(video_path)
+#     track_pickle_path = fix_path(track_pickle_path)
+#     frame_rate_segment = frame_skip_num + 1 
+
+#     with open(track_pickle_path, 'rb') as file:
+#         track_response_json = pickle.load(file)
+#         track_result = keys2int(track_response_json)
+#     save_video_name = generate_unique_filename(UPLOAD_FOLDER = sil_save_path, extension=None)
+#     silhouette = seg_modified(video_path, track_result, sil_save_path, save_video_name, frame_rate_segment)
+#     segment_folder = os.path.join(sil_save_path,save_video_name)
+#     sil_pickle_path = os.path.join(pickle_path_seg,save_video_name)
+#     with open(sil_pickle_path, 'wb') as file:
+#         pickle.dump(silhouette, file)
+#     segment_folder = fix_path(segment_folder)
+#     sil_pickle_path = fix_path(sil_pickle_path)
+#     res = {
+#             "status": 1,
+#             "error_code": None,
+#             "error_message": None,
+#             "result": 
+#                 {
+#            "segment_folder_path": segment_folder, 
+#            'sil_pickle_path': sil_pickle_path
+#                 }
+#         }
+#     print ('Done Segment')
+#     return res
+
 
 
 
