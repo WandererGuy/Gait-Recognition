@@ -1,0 +1,2 @@
+manh-probe-helmet "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/f2fa9ce7-aa5d-461e-8af9-0e40d986c037"
+giang "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/3e51d716-c17b-40c1-b2d5-15a2a1ba8e58"

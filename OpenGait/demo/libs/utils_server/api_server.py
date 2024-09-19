@@ -32,16 +32,25 @@ def pickle_response(response, response_pickle_file):
         # Serialize and write the variable to the file
         pickle.dump(response, file)
 
-def keys2int(dict, sub_key_name):
+# `def keys2int(dict, sub_key_name):
+#     # Access the 'gallery_track_result' dictionary
+#     tmp = dict[sub_key_name]
+
+#     # Convert all keys to integers
+#     int_keys = {int(k): v for k, v in tmp.items()}
+
+#     # Replace the original dictionary with the modified one
+#     dict[sub_key_name] = int_keys
+#     return dict`
+
+def keys2int(dict):
     # Access the 'gallery_track_result' dictionary
-    tmp = dict[sub_key_name]
 
     # Convert all keys to integers
-    int_keys = {int(k): v for k, v in tmp.items()}
+    new_dict = {int(k): v for k, v in dict.items()}
 
     # Replace the original dictionary with the modified one
-    dict[sub_key_name] = int_keys
-    return dict
+    return new_dict
 
 def get_target(text):
     # gallery-005-probe-011 : 17.2616
@@ -112,16 +121,11 @@ def check_name_in_list(my_list, element_to_check):
     else:
         return 0
 
-
 def display_all_distance(data: list):
     dist_ls = []
-    dummy_value = 1000
     for item in data:
         distance = item['distance']
-        if item['gallery_name'] == item["probe_name"] and int(distance) < 0.1:
-            dist_ls.append(dummy_value) 
-        else:
-            dist_ls.append(distance) 
+        dist_ls.append(distance) 
     sorted_ls = sorted(dist_ls)
     ranking_ls = []
     for i in range (len(sorted_ls)):
@@ -129,11 +133,29 @@ def display_all_distance(data: list):
         ranking_ls.append(data[index])
     return ranking_ls
 
+# def display_all_distance(data: list):
+#     dist_ls = []
+#     dummy_value = 1000
+#     for item in data:
+#         distance = item['distance']
+#         if item['gallery_feat_path'] == item["probe_feat_path"] and int(distance) < 0.1:
+#             dist_ls.append(dummy_value) 
+#             print ('gayyyyyyyy')
+#         else:
+#             print ('lessssss')
+#             dist_ls.append(distance) 
+#     sorted_ls = sorted(dist_ls)
+#     ranking_ls = []
+#     for i in range (len(sorted_ls)):
+#         index = dist_ls.index(sorted_ls[i])
+#         ranking_ls.append(data[index])
+#     return ranking_ls
+
 def change_pickle_path(pickle_path, saved_pickle_folder_name):
     new_pickle_path = os.path.join(pickle_path, saved_pickle_folder_name)
     return new_pickle_path
 
-
+import numpy as np 
 import json 
 class NumpyEncoder(json.JSONEncoder): # turn dict with np array to be jsonizable
     # if need tensor send through http -> res = json.dumps(res, cls=NumpyEncoder)

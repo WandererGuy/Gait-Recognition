@@ -1,7 +1,6 @@
 import os
-import os.path as osp
-import time
 import sys
+from utils_server.api_server import *
 sys.path.append(os.path.abspath('.') + "/demo/libs/")
 from recognise import *
 import requests
@@ -12,6 +11,9 @@ import torch
 import configparser
 import logging 
 from tqdm import tqdm
+from pathlib import Path
+from typing import List
+
 current_script_directory = os.path.dirname(os.path.abspath(__file__))
 
 config = configparser.ConfigParser()
@@ -21,18 +23,23 @@ rec_port_num = config['DEFAULT']['rec_port_num']
 
 save_root = './demo/output/'
 gait_feat_folder = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-result_distance_folder = gait_feat_folder + '/output/ResultDistance/'
-gait_feat_folder = gait_feat_folder + '/output/GaitFeatures/'
+pickle_path = os.path.join(current_script_directory,"pickle_variables")
+
+compare_session_folder = os.path.join(pickle_path, 'CompareSession/')
+pickle_path_rec = os.path.join(pickle_path, "embeddings_db")
+os.makedirs(pickle_path_rec, exist_ok=True)
 app = FastAPI()
+parent_folder = os.path.dirname(current_script_directory)
+# gait_feature_folder = parent_folder + '/output/GaitFeatures/'
 
 
-def get_gait_feat(feat_dict:dict):
-    all_embs = {}
-    for key, value in feat_dict.items():
-        path = os.path.join(gait_feat_folder,key,value,'undefined','undefined.pkl')
-        embs = pickle.load(file = open(path, 'rb'))
-        all_embs[f'{key}_{value}'] = embs
-    return all_embs   
+# def get_gait_feat(feat_dict:dict):
+#     all_embs = {}
+#     for key, value in feat_dict.items():
+#         path = os.path.join(gait_feat_folder,key,value,'undefined','undefined.pkl')
+#         embs = pickle.load(file = open(path, 'rb'))
+#         all_embs[f'{key}_{value}'] = embs
+#     return all_embs   
 
 def computedistence(x, y):
     distance = torch.sqrt(torch.sum(torch.square(x - y)))
@@ -43,41 +50,82 @@ def str2dict(string_dict):
     actual_dict = json.loads(string_dict)
     return actual_dict
 @app.post("/extract-sil-function")
-async def extract_sil_function(request: Request):
-    data = await request.json()
-    rec_output_pickle = data["rec_output_pickle"]
-    data = data["output"]
-    data = json.loads(data)
-    silhouette = data["silhouette"]
+async def extract_sil_function(sil_pickle_path: str = Form(...)):
+    rec_output_pickle = os.path.join(pickle_path_rec, Path(sil_pickle_path).name)
+    with open (sil_pickle_path, 'rb') as file:
+        silhouette = pickle.load(file)
     if silhouette != []:
         # recognise
-        if not os.path.exists(rec_output_pickle):
-            video_feat = extract_sil(silhouette, save_root+'/GaitFeatures/')
-            print ('done recognise')
-            with open(rec_output_pickle, 'wb') as file:
-                pickle.dump(video_feat, file)
-        return {"message": "success"}
-    else: 
-        return {"message": "sil result is empty already"} 
+        # if not os.path.exists(rec_output_pickle):
+        video_feat = extract_sil_modified(silhouette)
+        with open(rec_output_pickle, 'wb') as file:
+            pickle.dump(video_feat, file)
+        print ('done recognise')
 
-@app.post("/compare-multi-gallery-video")
-async def compare_multi_gallery_video(request: Request):
-    data = await request.json()
+        res = {
+                "status": 1,
+                "error_code": None,
+                "error_message": None,
+                "result":
+                    {
+                        "embedding_path": rec_output_pickle
+                    }
+                }
+    else: 
+        res = {
+                "status": 0,
+                "error_code": 400,
+                "error_message": "Sil result is empty already, check segment phase again",
+                "result": None
+                } 
+    return res
+
+
+
+
+@app.post("/compare-embeddings")
+async def compare_embeddings(
+                            probe_feat_path: str = Form(...), 
+                            list_gallery_feat_path: List[str]  = Form(...)
+                            ):
+    compare_session = generate_unique_filename(UPLOAD_FOLDER = compare_session_folder, extension=None)
+
+    compare_session_save_path, ranking_ls = compare_multi_gallery_modified(
+                         compare_session = compare_session,
+                         probe_feat_path = probe_feat_path, 
+                         list_gallery_feat_path = list_gallery_feat_path, 
+                         )
+    print ('done compare')
+            
+    res = {
+            "status": 1,
+            "error_code": None,
+            "error_message": None,
+            "result": 
+                {
+                # "ranking_ls": ranking_ls,
+                "compare_session_save_path": compare_session_save_path
+                }
+            }
+
+    return res
+
+
+def compare_multi_gallery_modified(compare_session, probe_feat_path, list_gallery_feat_path):
+    input_compare_json = {"probe_feat_path": probe_feat_path,
+                          "list_gallery_feat_path": list_gallery_feat_path, 
+                          "session": compare_session}
+    compare_session_save_path = compare_multi_gallery_video(input_compare_json)
+    return compare_session_save_path
+
+
+def compare_multi_gallery_video(data: dict):
     session = data["session"]
     list_gallery_feat_path = data["list_gallery_feat_path"]
     probe_feat_path = data["probe_feat_path"]
-    additional_info_ls = data["additional_info_ls"]
-    full_probe = data["full_probe"]
-    if not full_probe:
-        probe_id = data["probe_id"]
-        with open(probe_feat_path, 'rb') as file:
-            probe_feat = pickle.load(file)
-            probe_feat = {'probe':[{probe_id: {'undefined': probe_feat }}]}  
-    else:
-        with open(probe_feat_path, 'rb') as file:
-            probe_feat = pickle.load(file)
+    with open(probe_feat_path, 'rb') as file:
+        probe_feat = pickle.load(file)
     item_ls = []
-    print (list_gallery_feat_path)
     for index, gallery_feat_path in enumerate(tqdm(list_gallery_feat_path)):
             if os.path.exists(gallery_feat_path):  
                 with open(gallery_feat_path, 'rb') as file:
@@ -96,28 +144,297 @@ async def compare_multi_gallery_video(request: Request):
             '''
             
             _, all_compare = compare(gallery_feat, probe_feat, mode = 'multi')
-            os.makedirs(os.path.join(result_distance_folder,session), exist_ok=True)
             for key, value in all_compare.items():
                 item = {
-                "session": session, 
-                "probe_name": additional_info_ls[index]["probe_name"],
-                "gallery_name": additional_info_ls[index]["gallery_name"], 
-                "gallery_duplicate_name_id": additional_info_ls[index]["gallery_duplicate_name_id"],
+                "probe_feat_path": probe_feat_path,
+                "gallery_feat_path": gallery_feat_path,
                 "probe_id" : key.split('-gallery')[0].split(':')[1],
                 "gallery_id" : key.split('-gallery')[1].split(':')[1],
                 "distance" : value
                 }
                 item_ls.append(item)
-            save_path = os.path.join(result_distance_folder,str(session) + '.pkl')
-            pickle.dump(item_ls, open(save_path, "wb"))
-            # write_distance_file = os.path.join(result_distance_folder,session,str(list_distance_file_name[index] + '.txt'))
-            # with open(write_distance_file, 'w') as file:
-            #     for key, value in all_compare.items():
-            #         file.write(key + ' : ' + str(value) + '\n')
-            #     print ('result distance all videos written in ' + write_distance_file)
+            
+            compare_session_save_path = os.path.join(compare_session_folder,session)
+            ranking_ls = display_all_distance(item_ls)
+            with open (compare_session_save_path, 'wb') as file:
+                pickle.dump(ranking_ls, file)
+            
+    return compare_session_save_path, ranking_ls
 
 
-    return {'message': 'success, result distance all videos written in ' , 'path': save_path}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @app.post("/compare-feat-from-probe-video")
+# async def compare_feat_from_probe_video(full_probe: bool = Form(...), 
+#                                         compare_session: str = Form(...), 
+#                                         probe_id: str = Form("001"), 
+#                                         probe_feat_path: str = Form(...), 
+#                                         list_gallery_feat_path: List[str]  = Form(...)):
+
+#     # ls = []
+#     # for filename in list_gallery_vid_name:
+#     #     ls.append(os.path.join(pickle_path, filename))
+#     save_path = compare_multi_gallery_modified(
+#                          compare_session = compare_session,
+#                          probe_feat_path = probe_feat_path, 
+#                          list_gallery_feat_path = list_gallery_feat_path, 
+#                          full_probe=full_probe, 
+#                          probe_id = probe_id,
+#                          )
+#     compare_result = pickle.load(open(save_path, 'rb'))
+#     ranking_ls = display_all_distance(compare_result)
+
+#     # print ('=======Third minimum distance object=======')
+#     # print (ranking_ls[2])
+#     # print ('=======Second minimum distance object=======')
+#     # print (ranking_ls[1])
+#     # print ('=======Most minimum distance object=======')
+#     # print (ranking_ls[0])
+    
+    
+#     for item in ranking_ls:
+#         print (item)
+#     print ('done compare')
+
+#     return {"message": "success", "ranking_ls": ranking_ls}
+
+
+# current_script_directory = os.path.dirname(os.path.abspath(__file__))
+# parent_folder = os.path.dirname(current_script_directory)
+# pickle_path = os.path.join(current_script_directory,"pickle_variables")
+# gait_feature_folder = parent_folder + '/output/GaitFeatures/'
+# url_compare_multi_gallery_video = f'http://{host_ip}:{rec_port_num}/compare-multi-gallery-video'
+
+
+# def compare_multi_gallery_modified(compare_session, probe_feat_path, list_gallery_feat_path, full_probe=True, probe_id = None):
+#     if full_probe:
+#             probe_feat_path = probe_feat_path
+#     else:
+#             probe_name = Path(probe_feat_path).name
+#             probe_feat_path = os.path.join(gait_feature_folder, probe_name, probe_id, 'undefined', 'undefined.pkl')
+#     input_compare_json = {"probe_feat_path": probe_feat_path,
+#                           "list_gallery_feat_path": list_gallery_feat_path, 
+#                           "full_probe": full_probe,"probe_id": probe_id, 
+#                           "session": compare_session}
+#     response_json = compare_multi_gallery_video(input_compare_json)
+#     return response_json['path']
+
+
+# def compare_multi_gallery_video(data: dict):
+#     session = data["session"]
+#     list_gallery_feat_path = data["list_gallery_feat_path"]
+#     probe_feat_path = data["probe_feat_path"]
+#     full_probe = data["full_probe"]
+#     if not full_probe:
+#         probe_id = data["probe_id"]
+#         with open(probe_feat_path, 'rb') as file:
+#             probe_feat = pickle.load(file)
+#             tmp = Path(probe_feat_path).name
+#             probe_feat = {tmp:[{probe_id: {'undefined': probe_feat }}]}  
+#     else:
+#         with open(probe_feat_path, 'rb') as file:
+#             probe_feat = pickle.load(file)
+#     item_ls = []
+#     for index, gallery_feat_path in enumerate(tqdm(list_gallery_feat_path)):
+#             if os.path.exists(gallery_feat_path):  
+#                 with open(gallery_feat_path, 'rb') as file:
+#                     gallery_feat = pickle.load(file)
+#                     if gallery_feat == {}:
+#                         filename = gallery_feat_path.split("/")[-1]
+#                         logging.warning(f'{filename} gait feature empty because extracted feature extraction interuptted before or do not have person in it.')
+#                         continue
+#             else:
+#                 filename = gallery_feat_path.split("/")[-1]
+#                 logging.warning(f'{filename} did not extracted feature.')
+#                 continue
+#             '''
+#             collect all feat from each id in each video and calculate distance
+#             so each id of each video = an item
+#             '''
+            
+#             _, all_compare = compare(gallery_feat, probe_feat, mode = 'multi')
+#             os.makedirs(os.path.join(result_distance_folder,session), exist_ok=True)
+#             for key, value in all_compare.items():
+#                 item = {
+#                 "session": session, 
+#                 "probe_feat_path": probe_feat_path,
+#                 "gallery_feat_path": gallery_feat_path,
+#                 "probe_id" : key.split('-gallery')[0].split(':')[1],
+#                 "gallery_id" : key.split('-gallery')[1].split(':')[1],
+#                 "distance" : value
+#                 }
+#                 item_ls.append(item)
+#             save_path = os.path.join(result_distance_folder,str(session) + '.pkl')
+#             pickle.dump(item_ls, open(save_path, "wb"))
+#             # write_distance_file = os.path.join(result_distance_folder,session,str(list_distance_file_name[index] + '.txt'))
+#             # with open(write_distance_file, 'w') as file:
+#             #     for key, value in all_compare.items():
+#             #         file.write(key + ' : ' + str(value) + '\n')
+#             #     print ('result distance all videos written in ' + write_distance_file)
+
+
+#     return {'message': 'success, result distance all videos written in ' , 'path': save_path}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# @app.post("/compare-server")
+# async def compare_server(full_probe, compare_session, probe_id, probe_vid_name, list_gallery_vid_name):
+
+#     # ls = []
+#     # for filename in list_gallery_vid_name:
+#     #     ls.append(os.path.join(pickle_path, filename))
+#     ls = list_gallery_vid_name
+#     save_path = compare_multi_gallery_modified(
+#                          compare_session = compare_session,
+#                          probe_vid_name = probe_vid_name, 
+#                          list_gallery_vid_name = ls, 
+#                          full_probe=full_probe, 
+#                          probe_id = probe_id,
+#                          )
+#     compare_result = pickle.load(open(save_path, 'rb'))
+#     ranking_ls = display_all_distance(compare_result)
+
+#     # print ('=======Third minimum distance object=======')
+#     # print (ranking_ls[2])
+#     # print ('=======Second minimum distance object=======')
+#     # print (ranking_ls[1])
+#     # print ('=======Most minimum distance object=======')
+#     # print (ranking_ls[0])
+    
+    
+#     for item in ranking_ls:
+#         print (item)
+#     print ('done compare')
+
+#     return {"message": "success", "ranking_ls": ranking_ls}
+
+          
+# current_script_directory = os.path.dirname(os.path.abspath(__file__))
+# parent_folder = os.path.dirname(current_script_directory)
+# pickle_path = os.path.join(current_script_directory,"pickle_variables")
+# gait_feature_folder = parent_folder + '/output/GaitFeatures/'
+# url_compare_multi_gallery_video = f'http://{host_ip}:{rec_port_num}/compare-multi-gallery-video'
+
+          
+# def compare_multi_gallery_modified(compare_session, probe_vid_name, list_gallery_vid_name, full_probe=True, probe_id = None):
+#     list_gallery_feat_path = []
+#     additional_info_ls = []
+#     probe_name = probe_vid_name.replace(".mp4", "")
+#     for gallery_vid_name in list_gallery_vid_name:
+#         gallery_vid_name = gallery_vid_name.replace(".mp4", "")
+#         gallery_vid_feat_path = os.path.join(pickle_path, gallery_vid_name) + "/rec_output.pickle"
+#         list_gallery_feat_path.append(gallery_vid_feat_path)
+#         count = check_name_in_list(list_gallery_feat_path, gallery_vid_feat_path) 
+#         additional = {'probe_name': probe_name, 'gallery_name': gallery_vid_name, 'gallery_duplicate_name_id': count}
+#         additional_info_ls.append(additional)
+    
+#     if full_probe:
+#             probe_feat_path = os.path.join(pickle_path, probe_name) + "/rec_output.pickle"
+#     else:
+#             probe_feat_path = os.path.join(gait_feature_folder, probe_name, probe_id, 'undefined', 'undefined.pkl')
+#     input_compare_json = {"probe_feat_path": probe_feat_path,
+#                           "list_gallery_feat_path": list_gallery_feat_path, 
+#                           "additional_info_ls": additional_info_ls, 
+#                           "full_probe": full_probe,
+#                           "probe_id": probe_id, 
+#                           "session": compare_session}
+
+#     response = requests.post(url_compare_multi_gallery_video, json=input_compare_json)
+#     response_json =  json.loads(response.text)
+#     return response_json['path']
+
+
+
+
+# @app.post("/compare-multi-gallery-video")
+# async def compare_multi_gallery_video(request: Request):
+#     data = await request.json()
+#     session = data["session"]
+#     list_gallery_feat_path = data["list_gallery_feat_path"]
+#     probe_feat_path = data["probe_feat_path"]
+#     additional_info_ls = data["additional_info_ls"]
+#     full_probe = data["full_probe"]
+#     if not full_probe:
+#         probe_id = data["probe_id"]
+#         with open(probe_feat_path, 'rb') as file:
+#             probe_feat = pickle.load(file)
+#             probe_feat = {'probe':[{probe_id: {'undefined': probe_feat }}]}  
+#     else:
+#         with open(probe_feat_path, 'rb') as file:
+#             probe_feat = pickle.load(file)
+#     item_ls = []
+#     print (list_gallery_feat_path)
+#     for index, gallery_feat_path in enumerate(tqdm(list_gallery_feat_path)):
+#             if os.path.exists(gallery_feat_path):  
+#                 with open(gallery_feat_path, 'rb') as file:
+#                     gallery_feat = pickle.load(file)
+#                     if gallery_feat == {}:
+#                         filename = gallery_feat_path.split("/")[-1]
+#                         logging.warning(f'{filename} gait feature empty because extracted feature extraction interuptted before or do not have person in it.')
+#                         continue
+#             else:
+#                 filename = gallery_feat_path.split("/")[-1]
+#                 logging.warning(f'{filename} did not extracted feature.')
+#                 continue
+#             '''
+#             collect all feat from each id in each video and calculate distance
+#             so each id of each video = an item
+#             '''
+            
+#             _, all_compare = compare(gallery_feat, probe_feat, mode = 'multi')
+#             os.makedirs(os.path.join(result_distance_folder,session), exist_ok=True)
+#             for key, value in all_compare.items():
+#                 item = {
+#                 "session": session, 
+#                 "probe_name": additional_info_ls[index]["probe_name"],
+#                 "gallery_name": additional_info_ls[index]["gallery_name"], 
+#                 "gallery_duplicate_name_id": additional_info_ls[index]["gallery_duplicate_name_id"],
+#                 "probe_id" : key.split('-gallery')[0].split(':')[1],
+#                 "gallery_id" : key.split('-gallery')[1].split(':')[1],
+#                 "distance" : value
+#                 }
+#                 item_ls.append(item)
+#             save_path = os.path.join(result_distance_folder,str(session) + '.pkl')
+#             pickle.dump(item_ls, open(save_path, "wb"))
+#             # write_distance_file = os.path.join(result_distance_folder,session,str(list_distance_file_name[index] + '.txt'))
+#             # with open(write_distance_file, 'w') as file:
+#             #     for key, value in all_compare.items():
+#             #         file.write(key + ' : ' + str(value) + '\n')
+#             #     print ('result distance all videos written in ' + write_distance_file)
+
+
+#     return {'message': 'success, result distance all videos written in ' , 'path': save_path}
 
 
 # @app.post("/compare-feats")

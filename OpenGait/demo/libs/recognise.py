@@ -60,6 +60,33 @@ def gait_sil(sils, embs_save_path):
         feats[id].append(feat)    
     return feats    
 
+
+def gait_sil_modified(sils):
+    """Gets the features.
+
+    Args:
+        sils (list): List of Tuple (seqs, labs, typs, vies, seqL)
+        embs_save_path (Path): Output path.
+    Returns:
+        feats (dict): Dictionary of features
+    """
+    gaitmodel = loadModel(**recognise_cfgs["gaitmodel"])
+    gaitmodel.requires_grad_(False)
+    gaitmodel.eval()
+    feats = {}
+    for inputs in sils:
+        ipts = gaitmodel.inputs_pretreament(inputs)
+        id = inputs[1][0]
+        if id not in feats:
+            feats[id] = []
+        type = inputs[2][0] 
+        view = inputs[3][0]
+        retval, embs = gaitmodel.forward(ipts)
+        feat = {}
+        feat[type] = {}
+        feat[type][view] = embs
+        feats[id].append(feat)    
+    return feats    
 def gaitfeat_compare(gallery_feat:dict, probe_feat:dict, mode):
     """Compares the feature between gallery and probe
     
@@ -112,6 +139,19 @@ def extract_sil(sil, save_path):
     logger.info("extract Done")
     return video_feat
 
+def extract_sil_modified(sil):
+    """Gets the features.
+
+    Args:
+        sils (list): List of Tuple (seqs, labs, typs, vies, seqL)
+        save_path (Path): Output path.
+    Returns:
+        video_feats (dict): Dictionary of features from the video
+    """
+    logger.info("begin extracting")
+    video_feat = gait_sil_modified(sil)
+    logger.info("extract Done")
+    return video_feat
 
 def compare(gallery_feat, probe_feat, mode = "multi"):
     """Recognizes  the features between probe and gallery

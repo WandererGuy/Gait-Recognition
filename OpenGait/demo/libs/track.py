@@ -62,7 +62,7 @@ exp = get_exp(track_cfgs["model"]["exp_file"], None)
 model = loadckpt(exp)
 print ("load model done")
 
-def track(video_path, video_save_folder):
+def track(video_path, video_save_folder, save_video_name):
     """Tracks person in the input video
     
     Args:
@@ -86,7 +86,6 @@ def track(video_path, video_save_folder):
     frame_id = 0
     fps = cap.get(cv2.CAP_PROP_FPS)
     os.makedirs(video_save_folder, exist_ok=True)
-    save_video_name = video_path.split("/")[-1]
     save_video_path = osp.join(video_save_folder, save_video_name)
     print(f"video save_path is {save_video_path}")
     vid_writer = cv2.VideoWriter(
