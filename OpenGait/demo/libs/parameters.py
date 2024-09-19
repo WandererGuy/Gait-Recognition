@@ -10,11 +10,11 @@ seg_cfgs = {
     }
     }
 
-import pickle
-path = "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/f2fa9ce7-aa5d-461e-8af9-0e40d986c037"
-with open (path, "rb") as f:
-    tmp = pickle.load(f)
-    print (tmp)
+# import pickle
+# path = "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/f2fa9ce7-aa5d-461e-8af9-0e40d986c037"
+# with open (path, "rb") as f:
+#     tmp = pickle.load(f)
+#     print (tmp)
     
 # import os 
 # # Get the file size in bytes

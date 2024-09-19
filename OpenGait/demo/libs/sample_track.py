@@ -51,7 +51,7 @@ async def tracking(video_path: str = Form(...)):
     with open(tmp, 'wb') as file:
         pickle.dump(track_result, file)
     output_video_path = os.path.join(video_save_folder, save_video_name + '.mp4')
-    output_video_path = fix_path(output_video_path)
+    output_video_path = Path(output_video_path)
     output = {
         "status": 1,
         "error_code": None,
