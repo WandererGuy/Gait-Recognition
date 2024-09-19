@@ -70,47 +70,47 @@ def extract_target (file_path, target_gallery_id):
         print (i, target_distance_dict[i])
     return target_distance_dict  
 
-import matplotlib.pyplot as plt
-def plot_distance(target_distance_dict):       
-        # Sorting the data by values in descending order
-        sorted_gallery_probe_desc = dict(sorted(target_distance_dict.items(), key=lambda item: item[1], reverse=True))
+# import matplotlib.pyplot as plt
+# def plot_distance(target_distance_dict):       
+#         # Sorting the data by values in descending order
+#         sorted_gallery_probe_desc = dict(sorted(target_distance_dict.items(), key=lambda item: item[1], reverse=True))
 
-        # Print the sorted dictionary
-        print('=======================')
-        for key, value in sorted_gallery_probe_desc.items():
-            print(key, value)
+#         # Print the sorted dictionary
+#         print('=======================')
+#         for key, value in sorted_gallery_probe_desc.items():
+#             print(key, value)
 
-        # Extract sorted keys and values for plotting
-        sorted_galleries_desc = list(sorted_gallery_probe_desc.keys())
-        sorted_values_desc = list(sorted_gallery_probe_desc.values())
-        # Create a horizontal bar chart with larger figure size for better visualization
-        plt.figure(figsize=(10, 8))
-        max_value = max(sorted_values_desc)
+#         # Extract sorted keys and values for plotting
+#         sorted_galleries_desc = list(sorted_gallery_probe_desc.keys())
+#         sorted_values_desc = list(sorted_gallery_probe_desc.values())
+#         # Create a horizontal bar chart with larger figure size for better visualization
+#         plt.figure(figsize=(10, 8))
+#         max_value = max(sorted_values_desc)
 
-        # Create a vertical bar chart
-        plt.barh(sorted_galleries_desc, sorted_values_desc)
-        tick_interval = 1
+#         # Create a vertical bar chart
+#         plt.barh(sorted_galleries_desc, sorted_values_desc)
+#         tick_interval = 1
 
-        # Set x-axis ticks with specific intervals (0.0, 2.5, 5.0, etc.)
-        plt.xticks(ticks=[i for i in range(0, int(max_value + tick_interval), int(tick_interval))], 
-                labels=[f'{i:.1f}' for i in range(0, int(max_value + tick_interval), int(tick_interval))])
-        # Rotate the category labels for better readability
-        plt.xticks(rotation=45, ha='right')
+#         # Set x-axis ticks with specific intervals (0.0, 2.5, 5.0, etc.)
+#         plt.xticks(ticks=[i for i in range(0, int(max_value + tick_interval), int(tick_interval))], 
+#                 labels=[f'{i:.1f}' for i in range(0, int(max_value + tick_interval), int(tick_interval))])
+#         # Rotate the category labels for better readability
+#         plt.xticks(rotation=45, ha='right')
 
-        # Add labels and title
-        # plt.xlabel('Categories')
-        # plt.ylabel('Values')
-        plt.title('distance calculate')
+#         # Add labels and title
+#         # plt.xlabel('Categories')
+#         # plt.ylabel('Values')
+#         plt.title('distance calculate')
         
-        # Adjust layout for better readability
-        plt.tight_layout()
-        save_path = '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/ResultDistance/gallery_probe_plot.png'
-        plt.savefig(save_path, dpi=300, bbox_inches='tight')
-        print ('saved ', save_path)
+#         # Adjust layout for better readability
+#         plt.tight_layout()
+#         save_path = '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/ResultDistance/gallery_probe_plot.png'
+#         plt.savefig(save_path, dpi=300, bbox_inches='tight')
+#         print ('saved ', save_path)
 
-def plot_target_distance(distance_file_path, target_gallery_id):
-    target_distance_dict = extract_target(distance_file_path, target_gallery_id)  
-    plot_distance(target_distance_dict) 
+# def plot_target_distance(distance_file_path, target_gallery_id):
+#     target_distance_dict = extract_target(distance_file_path, target_gallery_id)  
+#     plot_distance(target_distance_dict) 
 
 def check_name_in_list(my_list, element_to_check):
     # Check if the element is in the list
@@ -170,5 +170,6 @@ class NumpyEncoder(json.JSONEncoder): # turn dict with np array to be jsonizable
             return obj.tolist()
         return json.JSONEncoder.default(self, obj)
     
-# def fix_path(path):
-#     return path.replace('\\\\','/').replace('\\','/')
+def fix_path(path):
+    new_path = path.replace('\\\\','/') 
+    return new_path.replace('\\','/')

@@ -54,7 +54,7 @@ async def extract_sil_function(sil_pickle_path: str = Form(...)):
                 "error_message": None,
                 "result":
                     {
-                        "embedding_path": rec_output_pickle
+                        "embedding_path": fix_path(rec_output_pickle)
                     }
                 }
     else: 
@@ -87,7 +87,7 @@ async def compare_embeddings(
             "result": 
                 {
                 # "ranking_ls": ranking_ls,
-                "compare_session_save_path": compare_session_save_path
+                "compare_session_save_path": fix_path(compare_session_save_path)
                 }
             }
 

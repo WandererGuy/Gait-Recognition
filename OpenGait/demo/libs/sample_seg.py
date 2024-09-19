@@ -48,8 +48,8 @@ async def extract_segment_folder(segment_folder_path: str = Form(...)):
             "error_message": None, 
             "result": 
                 {
-                "segment_folder_path": segment_folder_path, 
-                'sil_pickle_path': sil_pickle_path
+                "segment_folder_path": fix_path(segment_folder_path), 
+                'sil_pickle_path': fix_path(sil_pickle_path)
                 }
         }
         print ('Done Segment')
@@ -81,8 +81,8 @@ async def segment_no_video(folder_track_path: str = Form(...), frame_skip_num: i
             "error_message": None, 
             "result": 
                 {
-                "segment_folder_path": segment_folder_path, 
-                'sil_pickle_path': sil_pickle_path
+                "segment_folder_path": fix_path(segment_folder_path), 
+                'sil_pickle_path': fix_path(sil_pickle_path)
                 }
         }    
     print ('Done Segment')
@@ -137,7 +137,7 @@ async def segment_adding_frame(image_path: str = Form(...),
             "error_message": None, 
             "result": 
                 {
-                    "image_path": image_path
+                    "image_path": fix_path(image_path)
                 }
         }    
     print ('Done Segment')

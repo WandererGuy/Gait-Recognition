@@ -1,9 +1,12 @@
 config_gpu = True # i set to cpu becuase cpu is faster than gpu lol , set to true if you want to use gpu
 print ('decide to use gpu for paddle segmentation:', config_gpu)
+from pathlib import Path
 
+seg_yaml = "./demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml"
+seg_yaml = Path(seg_yaml)
 seg_cfgs = {  
     "model":{
-        "seg_model" : "./demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml",
+        "seg_model" : seg_yaml,
     },
     "gait":{
         "dataset": "GREW",

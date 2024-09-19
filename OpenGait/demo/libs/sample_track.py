@@ -58,8 +58,8 @@ async def tracking(video_path: str = Form(...)):
         "error_message": None,
         "result":
             {
-        "output_video_path": output_video_path,
-        "track_pickle_path": tmp
+        "output_video_path": fix_path(output_video_path),
+        "track_pickle_path": fix_path(tmp)
             }
     }
     print ('Done tracking')
