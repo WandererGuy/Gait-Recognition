@@ -174,3 +174,21 @@ def fix_path(path):
     path = str(path)
     new_path = path.replace('\\\\','/') 
     return new_path.replace('\\','/')
+
+def check_directories_in_folder(folder_path):
+    """
+    Check if there are any directories inside the specified folder.
+
+    Args:
+        folder_path (str): The path to the folder.
+
+    Returns:
+        list: A list of directories found inside the folder.
+    """
+    # Check if there is any directory inside the folder
+    directories = [entry for entry in os.listdir(folder_path) if os.path.isdir(os.path.join(folder_path, entry))]
+    
+    if directories:
+        return True
+    else:
+        return False

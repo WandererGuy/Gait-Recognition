@@ -89,14 +89,9 @@ def makedirs(save_dir):
         os.makedirs(dirname)
 
 def seg_image(img, config, save_name, savesil_path, config_gpu):
-    
-
     predictor = Predictor_opengait(config, config_gpu)
     bg_img = 255 * np.ones(img.shape)
-    
-    
     out_img, out_mask = predictor.run(img, bg_img)
-
     therehold = 80
     temp = out_mask < therehold
     out_mask = np.where(temp, 0, 255)
@@ -105,7 +100,14 @@ def seg_image(img, config, save_name, savesil_path, config_gpu):
     savesil_name = os.path.join(savesil_path, save_name)
     cv2.imwrite(savesil_name, out_mask)
 
-
+def seg_image_modified(img, config, save_image_path, config_gpu):
+    predictor = Predictor_opengait(config, config_gpu)
+    bg_img = 255 * np.ones(img.shape)
+    out_img, out_mask = predictor.run(img, bg_img)
+    therehold = 80
+    temp = out_mask < therehold
+    out_mask = np.where(temp, 0, 255)
+    cv2.imwrite(save_image_path, out_mask)
 
 def seg_video(args):
     assert os.path.exists(args.video_path), \

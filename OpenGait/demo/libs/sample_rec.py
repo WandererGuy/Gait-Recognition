@@ -38,7 +38,8 @@ app = FastAPI()
 @app.post("/extract-sil-function")
 async def extract_sil_function(sil_pickle_path: str = Form(...)):
     sil_pickle_path = Path(sil_pickle_path)
-    rec_output_pickle = os.path.join(pickle_path_rec, sil_pickle_path.name)
+    tmp = sil_pickle_path.name.split(".")[0]
+    rec_output_pickle = os.path.join(pickle_path_rec, tmp + ".pkl")
     with open (sil_pickle_path, 'rb') as file:
         silhouette = pickle.load(file)
     if silhouette != []:
@@ -131,15 +132,15 @@ def compare_multi_gallery_video(data: dict):
             _, all_compare = compare(gallery_feat, probe_feat, mode = 'multi')
             for key, value in all_compare.items():
                 item = {
-                "probe_feat_path": probe_feat_path,
-                "gallery_feat_path": gallery_feat_path,
+                "probe_feat_path": fix_path(probe_feat_path),
+                "gallery_feat_path": fix_path(gallery_feat_path),
                 "probe_id" : key.split('-gallery')[0].split(':')[1],
                 "gallery_id" : key.split('-gallery')[1].split(':')[1],
                 "distance" : value
                 }
                 item_ls.append(item)
             
-            compare_session_save_path = os.path.join(compare_session_folder,session)
+            compare_session_save_path = os.path.join(compare_session_folder,session + '.pkl')
             ranking_ls = display_all_distance(item_ls)
             with open (compare_session_save_path, 'wb') as file:
                 pickle.dump(ranking_ls, file)
@@ -150,12 +151,8 @@ def compare_multi_gallery_video(data: dict):
 
 def main():
     print('INITIALIZING FASTAPI SERVER')
-        # Check if GPU is available
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-    # Print the device
     print(f"Device being used: {device}")
-
     uvicorn.run("sample_rec:app", host=host_ip, port=int(rec_port_num), reload=True)
 
 if __name__ == "__main__":
@@ -349,14 +346,14 @@ if __name__ == "__main__":
 #     probe_name = probe_vid_name.replace(".mp4", "")
 #     for gallery_vid_name in list_gallery_vid_name:
 #         gallery_vid_name = gallery_vid_name.replace(".mp4", "")
-#         gallery_vid_feat_path = os.path.join(pickle_path, gallery_vid_name) + "/rec_output.pickle"
+#         gallery_vid_feat_path = os.path.join(pickle_path, gallery_vid_name) + "/rec_output.pkl"
 #         list_gallery_feat_path.append(gallery_vid_feat_path)
 #         count = check_name_in_list(list_gallery_feat_path, gallery_vid_feat_path) 
 #         additional = {'probe_name': probe_name, 'gallery_name': gallery_vid_name, 'gallery_duplicate_name_id': count}
 #         additional_info_ls.append(additional)
     
 #     if full_probe:
-#             probe_feat_path = os.path.join(pickle_path, probe_name) + "/rec_output.pickle"
+#             probe_feat_path = os.path.join(pickle_path, probe_name) + "/rec_output.pkl"
 #     else:
 #             probe_feat_path = os.path.join(gait_feature_folder, probe_name, probe_id, 'undefined', 'undefined.pkl')
 #     input_compare_json = {"probe_feat_path": probe_feat_path,

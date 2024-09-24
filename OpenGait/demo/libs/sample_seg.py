@@ -25,7 +25,8 @@ os.makedirs(pickle_path_seg, exist_ok=True)
 os.makedirs(save_root, exist_ok=True)
 os.makedirs(sil_save_path, exist_ok=True)
 
-
+tid = 1
+tid = "{:06d}".format(tid)
 app = FastAPI()
     
 
@@ -34,14 +35,23 @@ app = FastAPI()
 # or select out a segement sequence into a folder 
 async def extract_segment_folder(segment_folder_path: str = Form(...)):
         segment_folder_path = Path(segment_folder_path)
+        if check_directories_in_folder(segment_folder_path):
+            res = {
+            "status": 0,
+            "error_code": 400,
+            "error_message": "Segment folder cannot have folder in it", 
+            "result": 
+                {
+                "segment_folder_path": None, 
+                'sil_pickle_path': None
+                }
+                }
+            return res
         silhouette = getsil_modified(segment_folder_path)
         save_video_name = Path(segment_folder_path).name
-        sil_pickle_path = os.path.join(pickle_path_seg,save_video_name)
+        sil_pickle_path = os.path.join(pickle_path_seg,save_video_name + ".pkl")
         with open(sil_pickle_path, 'wb') as file:
             pickle.dump(silhouette, file)
-
-        sil_pickle_path = Path(sil_pickle_path)
-
         res = {
             "status": 1,
             "error_code": None,
@@ -64,17 +74,11 @@ async def segment_no_video(folder_track_path: str = Form(...), frame_skip_num: i
     folder_track_path = Path(folder_track_path)
     frame_rate_segment = frame_skip_num + 1 
     save_video_name = generate_unique_filename(UPLOAD_FOLDER = sil_save_path, extension=None)
-    
-    tid = 1
-    sil_pickle_path = os.path.join(pickle_path_seg,save_video_name)
-    segment_folder_path = os.path.join(sil_save_path,save_video_name)
-
-    silhouette = seg_no_video(save_video_name, sil_save_path, tid, folder_track_path, frame_rate_segment)
+    sil_pickle_path = os.path.join(pickle_path_seg,save_video_name+'.pkl')
+    segment_folder_path = os.path.join(sil_save_path,save_video_name, tid , "undefined")
+    silhouette = seg_no_video(save_video_name, sil_save_path, folder_track_path, frame_rate_segment)
     with open(sil_pickle_path, 'wb') as file:
         pickle.dump(silhouette, file)
-    segment_folder_path = Path(segment_folder_path)
-    sil_pickle_path = Path(sil_pickle_path)
-
     res = {
             "status": 1,
             "error_code": None,
@@ -94,13 +98,11 @@ async def segment_no_video(folder_track_path: str = Form(...), frame_skip_num: i
 async def segment_first_frame(image_path: str = Form(...)):
     image_path = Path(image_path)
     save_video_name = generate_unique_filename(UPLOAD_FOLDER = sil_save_path, extension=None)
-
-    tid = 1
-    segment_folder_path = os.path.join(sil_save_path,save_video_name)
-    image_name = seg_single_frame(save_video_name, sil_save_path, tid, image_path, frame_id = 1)
+    segment_folder_path = os.path.join(sil_save_path,save_video_name, tid, "undefined")
+    os.makedirs(segment_folder_path, exist_ok=True)
+    save_image_path = os.path.join(segment_folder_path, tid + '-' + tid + '.png')
+    seg_single_frame(image_path, save_image_path)
     segment_folder_path = Path(segment_folder_path)
-    image_path = os.path.join(segment_folder_path, image_name)
-    image_path = Path(image_path)
     res = {
             "status": 1,
             "error_code": None,
@@ -108,7 +110,7 @@ async def segment_first_frame(image_path: str = Form(...)):
             "result": 
                 {
                 "segment_folder_path": fix_path(segment_folder_path), 
-                "image_path": fix_path(image_path),
+                "image_path": fix_path(save_image_path),
                 }
         }    
     print ('Done Segment')
@@ -121,23 +123,17 @@ async def segment_adding_frame(image_path: str = Form(...),
                                segment_folder_path: str = Form(...),
                                frame_id: int = Form(...)):
     image_path = Path(image_path)
-    save_video_name = Path(segment_folder_path).name
-    
-    tid = 1
-    # sil_pickle_path = os.path.join(pickle_path_seg,save_video_name)
-    segment_folder_path = os.path.join(sil_save_path,save_video_name)
-    image_name = seg_single_frame(save_video_name, sil_save_path, tid, image_path, frame_id)
-    segment_folder_path = Path(segment_folder_path)
-    image_path = os.path.join(segment_folder_path, image_name)
-    image_path = Path(image_path)
-
+    frame_id = "{:06d}".format(frame_id)
+    save_image_name = tid + '-'  + frame_id + '.png'
+    save_image_path = os.path.join(segment_folder_path, save_image_name)
+    seg_single_frame(image_path, save_image_path)
     res = {
             "status": 1,
             "error_code": None,
             "error_message": None, 
             "result": 
                 {
-                    "image_path": fix_path(image_path)
+                    "image_path": fix_path(save_image_path)
                 }
         }    
     print ('Done Segment')

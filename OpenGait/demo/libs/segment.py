@@ -18,7 +18,7 @@ import paddle
 # from tracking_utils.visualize import plot_tracking, plot_track
 from pretreatment import pretreat, imgs2inputs
 sys.path.append((os.path.dirname(os.path.abspath(__file__) )) + "/paddle/")
-from seg_demo import seg_image
+from seg_demo import seg_image_modified, seg_image
 # from yolox.exp import get_exp
 from parameters import config_gpu, seg_cfgs
 
@@ -37,13 +37,13 @@ def check_gpu_available():
 #     # whole folder for 1 person , so 1 tid 
 #     save_video_name = video_name
 #     save_video_name = save_video_name.split(".")[0]
-#     tidstr = "{:03d}".format(tid)
+#     tidstr = "{:06d}".format(tid)
 #     savesil_path = osp.join(sil_save_path, save_video_name, tidstr, "undefined")
     
 #     # Read the image from a file
 #     frame = cv2.imread(image)
 #     tmp = frame
-#     save_name = "{:03d}-{:03d}.png".format(tid, id)
+#     save_name = "{:06d}-{:06d}.png".format(tid, id)
 #     # Get the dimensions of the image
 #     # no need to extend crop like normal 
 #     new_h, new_w, _ = tmp.shape
@@ -62,15 +62,9 @@ def check_gpu_available():
 #     if ch == 27 or ch == ord("q") or ch == ord("Q"):
 #         break
 #     return Path(sil_save_path, save_video_name)
-def imageflow_demo_single_frame(video_name, sil_save_path, tid, image_path, frame_id):
-        save_video_name = video_name
-        save_video_name = save_video_name.split(".")[0]
-        tidstr = "{:03d}".format(tid)
-        savesil_path = osp.join(sil_save_path, save_video_name, tidstr, "undefined")
-
+def imageflow_demo_single_frame(image_path, save_image_path):
         frame = cv2.imread(image_path)
         tmp = frame
-        save_name = "{:03d}-{:03d}.png".format(tid, frame_id)
         # Get the dimensions of the image
         # no need to extend crop like normal 
         new_h, new_w, _ = tmp.shape
@@ -83,16 +77,16 @@ def imageflow_demo_single_frame(video_name, sil_save_path, tid, image_path, fram
         tmp_new = tmp_new.astype(np.uint8)
         tmp = cv2.resize(tmp_new,(192,192))
         start = time.time()
-        seg_image(tmp, seg_cfgs["model"]["seg_model"], save_name, savesil_path, config_gpu)
+        seg_image_modified(tmp, seg_cfgs["model"]["seg_model"], save_image_path, config_gpu)
         # print ("seg_process_time 1 frame ", time.time() - start)
-        return Path(sil_save_path, save_video_name), save_name
+         
 
 
 def imageflow_demo_no_video(video_name, sil_save_path, tid, folder_track_path, frame_rate_segment):
     # whole folder for 1 person , so 1 tid 
     save_video_name = video_name
     save_video_name = save_video_name.split(".")[0]
-    tidstr = "{:03d}".format(tid)
+    tidstr = "{:06d}".format(tid)
     savesil_path = osp.join(sil_save_path, save_video_name, tidstr, "undefined")
     for id, filename in enumerate(tqdm(sorted(os.listdir(folder_track_path)))):
         if id % frame_rate_segment == 0:
@@ -100,7 +94,7 @@ def imageflow_demo_no_video(video_name, sil_save_path, tid, folder_track_path, f
             # Read the image from a file
             frame = cv2.imread(file_path)
             tmp = frame
-            save_name = "{:03d}-{:03d}.png".format(tid, id)
+            save_name = "{:06d}-{:06d}.png".format(tid, id)
             # Get the dimensions of the image
             # no need to extend crop like normal 
             new_h, new_w, _ = tmp.shape
@@ -161,7 +155,7 @@ def imageflow_demo_modified(video_path, track_result, sil_save_path, save_video_
                     '''
 
                     tid = tidxywh[0]
-                    tidstr = "{:03d}".format(tid)
+                    tidstr = "{:06d}".format(tid)
                     savesil_path = osp.join(sil_save_path, save_video_name, tidstr, "undefined")
 
                     x = tidxywh[1]
@@ -183,7 +177,7 @@ def imageflow_demo_modified(video_path, track_result, sil_save_path, save_video_
                     new_h = y2_new - y1_new
                     tmp = frame[y1_new: y2_new, x1_new: x2_new, :]
 
-                    save_name = "{:03d}-{:03d}.png".format(tid, frame_id)
+                    save_name = "{:06d}-{:06d}.png".format(tid, frame_id)
                     # place object in center of a square white image for padding 
                     # size sidexside to place cropped into later 
                     side = max(new_w,new_h)
@@ -250,7 +244,7 @@ def imageflow_demo(video_path, track_result, sil_save_path, save_video_name, fra
                     '''
 
                     tid = tidxywh[0]
-                    tidstr = "{:03d}".format(tid)
+                    tidstr = "{:06d}".format(tid)
                     savesil_path = osp.join(sil_save_path, save_video_name, tidstr, "undefined")
 
                     x = tidxywh[1]
@@ -272,7 +266,7 @@ def imageflow_demo(video_path, track_result, sil_save_path, save_video_name, fra
                     new_h = y2_new - y1_new
                     tmp = frame[y1_new: y2_new, x1_new: x2_new, :]
 
-                    save_name = "{:03d}-{:03d}.png".format(tid, frame_id)
+                    save_name = "{:06d}-{:06d}.png".format(tid, frame_id)
                     # place object in center of a square white image for padding 
                     # size sidexside to place cropped into later 
                     side = max(new_w,new_h)
@@ -316,18 +310,16 @@ def seg(video_path, track_result, sil_save_path):
     inputs = imgs2inputs(Path(sil_save_path), 64, False, seg_cfgs["gait"]["dataset"])
     return inputs
 
-def seg_single_frame(video_name, sil_save_path, tid, image_path, frame_id):
-    _, image_name = imageflow_demo_single_frame(video_name, 
-                                            sil_save_path, 
-                                            tid, 
-                                            image_path, 
-                                            frame_id
-                                            )
-    return image_name
+def seg_single_frame(image_path, save_image_path):
+    imageflow_demo_single_frame(image_path,
+                                save_image_path
+                                )
     # inputs = imgs2inputs(Path(sil_save_path), 64, False, seg_cfgs["gait"]["dataset"])
      
 
-def seg_no_video(video_name, sil_save_path, tid, folder_track_path, frame_rate_segment):
+def seg_no_video(video_name, sil_save_path, folder_track_path, frame_rate_segment):
+    tid = 1
+
     sil_save_path = imageflow_demo_no_video(video_name, 
                                             sil_save_path, 
                                             tid, 

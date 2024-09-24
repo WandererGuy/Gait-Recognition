@@ -2,8 +2,8 @@
 #         gallery_name = "gallery" 
 #         probe1_name = "kien7"
 
-#         gallery_feat_path = os.path.join(pickle_path, gallery_name) + "/rec_output.pickle"
-#         probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pickle"
+#         gallery_feat_path = os.path.join(pickle_path, gallery_name) + "/rec_output.pkl"
+#         probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pkl"
 
 #         input_compare_json = {"gallery_feat_path": gallery_feat_path,"probe1_feat_path": probe1_feat_path, "video_save_folder": video_save_folder}
 
@@ -22,7 +22,7 @@
 #         gallery_name = "gallery" 
 #         probe1_name = "kien7"
 
-#         probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pickle"
+#         probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pkl"
 
 #         gallery_feat_path = '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/GaitFeatures/gallery/006/undefined/undefined.pkl'
 #         id = '006'
@@ -53,7 +53,7 @@
 #         gallery_name = "gallery" 
 #         probe1_name = "kien7"
 
-#         probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pickle"
+#         probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pkl"
 
 #         gallery_feat_path = '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/GaitFeatures/gallery/006/undefined/undefined.pkl'
 #         id = '006'
@@ -97,8 +97,8 @@
 #     probe1_name = probe_vid_name.replace(".mp4", "")
 #     distance_file_name = gallery_name + '_' + probe1_name
 
-#     gallery_feat_path = os.path.join(pickle_path, gallery_name) + "/rec_output.pickle"
-#     probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pickle"
+#     gallery_feat_path = os.path.join(pickle_path, gallery_name) + "/rec_output.pkl"
+#     probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pkl"
 
 #     input_compare_json = {"gallery_feat_path": gallery_feat_path,
 #                         "probe1_feat_path": probe1_feat_path, 
@@ -167,8 +167,8 @@
 # gallery_name = "gallery" 
 # probe1_name = "kien7"
 
-# gallery_feat_path = os.path.join(pickle_path, gallery_name) + "/rec_output.pickle"
-# probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pickle"
+# gallery_feat_path = os.path.join(pickle_path, gallery_name) + "/rec_output.pkl"
+# probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pkl"
 
 # input_compare_json = {"gallery_feat_path": gallery_feat_path,"probe1_feat_path": probe1_feat_path, "video_save_folder": video_save_folder}
 
@@ -186,7 +186,7 @@
 # gallery_name = "gallery" 
 # probe1_name = "kien7"
 
-# probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pickle"
+# probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pkl"
 
 # gallery_feat_path = '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/GaitFeatures/gallery/006/undefined/undefined.pkl'
 # id = '006'
@@ -215,7 +215,7 @@
 # gallery_name = "gallery" 
 # probe1_name = "kien7"
 
-# probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pickle"
+# probe1_feat_path  = os.path.join(pickle_path, probe1_name) + "/rec_output.pkl"
 
 # gallery_feat_path = '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/GaitFeatures/gallery/006/undefined/undefined.pkl'
 # id = '006'

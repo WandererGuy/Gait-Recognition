@@ -117,6 +117,7 @@ def imgs2inputs(input_path: Path, img_size: int = 64, verbose: bool = False, dat
             sinfos.append((sid, seq, view))
         img_groups[(sid, seq, view)].append(img_path)
         total_files += 1
+    
     for sinfo in sinfos:
         img_paths = img_groups[(sinfo[0], sinfo[1], sinfo[2])]
         to_pickle = []

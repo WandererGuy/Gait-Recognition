@@ -205,7 +205,7 @@ def writeresult(pgdict, video_path, video_save_folder):
                         diff = t.track_id - 1
                     track_id = t.track_id - diff
 
-                    pid = "{}-{:03d}".format(video_name, track_id)
+                    pid = "{}-{:06d}".format(video_name, track_id)
                     pid_id = pid.split('-')[1]
                     print (pid_id)
                     if pid not in keys_not_none:
