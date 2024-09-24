@@ -11,6 +11,5 @@ pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 torchaudio==0.12.1 --e
 pip install tqdm pyyaml tensorboard opencv-python kornia einops imageio matplotlib scikit-learn loguru
 pip install fastapi uvicorn pydantic python-multipart
 
-conda env export -p E:\ManhT04\GaitRec\Gait-Recognition\OpenGait\all_env\env_rec > window_environment.yml
 
-conda env export -p E:\ManhT04\GaitRec\Gait-Recognition\OpenGait\all_env\env_track > track_env.yaml
+conda env export -p (env) > (env).yaml

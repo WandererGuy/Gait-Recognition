@@ -107,8 +107,8 @@ async def segment_first_frame(image_path: str = Form(...)):
             "error_message": None, 
             "result": 
                 {
-                "segment_folder_path": segment_folder_path, 
-                "image_path": image_path,
+                "segment_folder_path": fix_path(segment_folder_path), 
+                "image_path": fix_path(image_path),
                 }
         }    
     print ('Done Segment')

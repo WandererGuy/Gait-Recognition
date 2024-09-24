@@ -37,7 +37,8 @@ app = FastAPI()
 
 @app.post("/extract-sil-function")
 async def extract_sil_function(sil_pickle_path: str = Form(...)):
-    rec_output_pickle = os.path.join(pickle_path_rec, Path(sil_pickle_path).name)
+    sil_pickle_path = Path(sil_pickle_path)
+    rec_output_pickle = os.path.join(pickle_path_rec, sil_pickle_path.name)
     with open (sil_pickle_path, 'rb') as file:
         silhouette = pickle.load(file)
     if silhouette != []:
@@ -72,7 +73,7 @@ async def compare_embeddings(
                             list_gallery_feat_path: List[str]  = Form(...)
                             ):
     compare_session = generate_unique_filename(UPLOAD_FOLDER = compare_session_folder, extension=None)
-
+    probe_feat_path = Path(probe_feat_path)
     compare_session_save_path, ranking_ls = compare_multi_gallery_modified(
                          compare_session = compare_session,
                          probe_feat_path = probe_feat_path, 
@@ -86,7 +87,7 @@ async def compare_embeddings(
             "error_message": None,
             "result": 
                 {
-                # "ranking_ls": ranking_ls,
+                "ranking_ls": ranking_ls,
                 "compare_session_save_path": fix_path(compare_session_save_path)
                 }
             }
@@ -110,6 +111,7 @@ def compare_multi_gallery_video(data: dict):
         probe_feat = pickle.load(file)
     item_ls = []
     for index, gallery_feat_path in enumerate(tqdm(list_gallery_feat_path)):
+            gallery_feat_path = Path(gallery_feat_path)
             if os.path.exists(gallery_feat_path):  
                 with open(gallery_feat_path, 'rb') as file:
                     gallery_feat = pickle.load(file)

@@ -171,5 +171,6 @@ class NumpyEncoder(json.JSONEncoder): # turn dict with np array to be jsonizable
         return json.JSONEncoder.default(self, obj)
     
 def fix_path(path):
+    path = str(path)
     new_path = path.replace('\\\\','/') 
     return new_path.replace('\\','/')
