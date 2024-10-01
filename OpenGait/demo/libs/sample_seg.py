@@ -48,7 +48,8 @@ async def extract_segment_folder(segment_folder_path: str = Form(...)):
                 }
             return res
         silhouette = getsil_modified(segment_folder_path)
-        save_video_name = Path(segment_folder_path).name
+        origin_name = os.path.dirname(os.path.dirname(segment_folder_path))
+        save_video_name = Path(origin_name).name
         sil_pickle_path = os.path.join(pickle_path_seg,save_video_name + ".pkl")
         with open(sil_pickle_path, 'wb') as file:
             pickle.dump(silhouette, file)
