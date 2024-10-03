@@ -1,0 +1,19 @@
+{"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/dang_di_sample/Mau GD/Doi tuong 4 ngay 24-3-2021/5167526383877495248.mp4":"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/track/bed0c427-6a0d-4968-ab96-5cfaf8074862",
+
+"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/dang_di_sample/Mau GD/Doi tuong 1/C0103.MP4":"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/track/622675fe-380a-4de4-8da2-6756b433b919",
+
+"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/dang_di_sample/Mau GD/Doi tuong 3 ngay 22-11-2020/8300278661057155957.mp4":"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/track/58c2dd82-f19d-4087-9a2c-61f117de46b9",
+
+"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/dang_di_sample/Mau GD/Doi tuong 3 ngay 22-11-2020/7180747282665697279.mp4":"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/track/1132b021-8bc2-4099-8150-21e229444885",
+
+"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/dang_di_sample/Mau GD/Doi tuong 5 ngay 30-11-2020/5234757553247363443.mp4":"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/track/a7c0dfa5-0b4d-491c-9121-de743c405768",
+
+"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/dang_di_sample/Mau GD/Doi tuong 2 ngay 02-11-2020/8328534836514339442.mp4":"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/track/0587f470-135a-498c-8952-786509ffde75",
+
+"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/dang_di_sample/Mau GD/Doi tuong 2 ngay 02-11-2020/5652104598115489538 (1).mp4":"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/track/4b71fd79-b249-4850-a2bc-54c9273360ae",
+
+"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/dang_di_sample/Mau SS/di vao 01h28p.mp4":"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/track/82a76341-8a70-4dbc-9e78-77effc208d44",
+
+"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/dang_di_sample/Mau SS/di ra 03h13p.mp4":"/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/track/2112f758-19ce-4efa-8efc-374590ad77c2"
+
+}

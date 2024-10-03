@@ -13,18 +13,13 @@ seg_cfgs = {
     }
     }
 
-# import pickle
-# path = "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/f2fa9ce7-aa5d-461e-8af9-0e40d986c037"
-# with open (path, "rb") as f:
-#     tmp = pickle.load(f)
-#     print (tmp)
+import pickle
+path = "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/track/1e0d7c60-29a9-4994-be2f-c9297627272c"
+with open (path, "rb") as f:
+    tmp = pickle.load(f)
+    print (tmp[0])
     
 # import os 
-# # Get the file size in bytes
-# file_size_bytes = os.path.getsize("/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/segment/6c854a23-f8e1-4fbc-bde5-5f94ac838ffa")
-
-# # Convert bytes to kilobytes
-# file_size_kb = file_size_bytes / 1024
 
 # # Print the file size in kilobytes
 # print(f"File size: {file_size_kb} KB")

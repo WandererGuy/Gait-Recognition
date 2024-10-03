@@ -39,6 +39,7 @@ track_port_num = config['DEFAULT']['track_port_num']
 
 @app.post("/tracking")
 async def tracking(video_path: str = Form(...)):
+    print ('gayyy')
     os.makedirs(output_dir, exist_ok=True)
     # current_time = time.localtime()
     # timestamp = time.strftime("%Y_%m_%d_%H_%M_%S", current_time)

@@ -95,6 +95,32 @@ async def compare_embeddings(
 
     return res
 
+@app.post("/compare-embeddings-short")
+async def compare_embeddings(
+                            probe_feat_path: str = Form(...), 
+                            list_gallery_feat_path: str  = Form(...)
+                            ):
+    compare_session = generate_unique_filename(UPLOAD_FOLDER = compare_session_folder, extension=None)
+    probe_feat_path = Path(probe_feat_path)
+    compare_session_save_path, ranking_ls = compare_multi_gallery_modified(
+                         compare_session = compare_session,
+                         probe_feat_path = probe_feat_path, 
+                         list_gallery_feat_path = [list_gallery_feat_path], 
+                         )
+    print ('done compare')
+            
+    res = {
+            "status": 1,
+            "error_code": None,
+            "error_message": None,
+            "result": 
+                {
+                "distance": ranking_ls[0]["distance"],
+                }
+            }
+
+    return res
+
 
 def compare_multi_gallery_modified(compare_session, probe_feat_path, list_gallery_feat_path):
     input_compare_json = {"probe_feat_path": probe_feat_path,

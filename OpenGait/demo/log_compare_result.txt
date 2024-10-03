@@ -1,0 +1,43 @@
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5167526383877495248/001
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/53b0d8f5-b3f6-49f1-8b11-db523a1b7d5a.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 14.7141}
+-------------------------------------------- good 
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5234757553247363443/001
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/e33b113e-6c6e-4928-a939-09b8a9b37d82.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 15.53907}
+-------------------------------------------- good 
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/7180747282665697279/002
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/813dc28c-6093-4450-b6eb-a04284e6956e.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 16.76983}
+-------------------------------------------- pink shirt guy 
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/012
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/77f9b23d-98d4-4484-bd5e-63e031c0f8b1.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 16.70483}
+-------------------------------------------- rank 4/12
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8300278661057155957/002
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/2a44f730-ee38-4289-8631-6e28f0c3054a.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 16.323}
+-------------------------------------------- good 
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5652104598115489538 (1)/004
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/70b6f805-3090-4cc2-bd11-c0115694c1a0.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 15.5013}
+-------------------------------------------- good 
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/001  
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/4c725eaa-1353-4c8e-9182-22d5113861b7.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 15.52761}
+-------------------------------------------- good 
+
+
+
+
+
+
+
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/012
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/77f9b23d-98d4-4484-bd5e-63e031c0f8b1.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 16.70483}
+--------------------------------------------
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/011
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/237eb812-557c-4950-a367-7dae4c86bc12.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 17.05527}
+--------------------------------------------
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/004
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/246cab75-44f4-412e-b4b6-3fb1f2a7ec17.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 17.07669}
+--------------------------------------------
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/006
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/d585ca2c-66ab-4a29-92c9-5a42d4c5cc1c.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 17.2415}
+--------------------------------------------
+/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/002
+{'probe_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/5b151ef6-ca52-463c-90c2-0146178ff28d.pkl', 'gallery_feat_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/embeddings_db/0ca32e47-91a1-4f89-9a45-65cad4588781.pkl', 'probe_id': '000001', 'gallery_id': '000001', 'distance': 17.41137}
+--------------------------------------------

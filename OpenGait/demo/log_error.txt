@@ -1,0 +1,4 @@
+ERROR:root:All 3 attempts failed for http://10.0.68.103:2002/segment-no-video with data: {'folder_track_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5652104598115489538 (1)/004', 'frame_skip_num': '4'}
+ERROR:root:Client error processing /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5652104598115489538 (1)/004: [Errno 104] Connection reset by peer
+ERROR:root:All 3 attempts failed for http://10.0.68.103:2002/segment-no-video with data: {'folder_track_path': '/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/002', 'frame_skip_num': '4'}
+ERROR:root:Client error processing /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/002: [Errno 104] Connection reset by peer
