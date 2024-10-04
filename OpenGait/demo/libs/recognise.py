@@ -6,26 +6,23 @@ import sys
 
 root = os.path.dirname(os.path.dirname(os.path.dirname( os.path.abspath(__file__) )))
 sys.path.append(root)
-from opengait.utils import config_loader
 sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname( os.path.abspath(__file__)))) + "/modeling/")
 from loguru import logger
 import model.baselineDemo as baselineDemo
 import gait_compare as gc
+from config_rec import recognise_cfgs
 
-recognise_cfgs = {  
-    "gaitmodel":{
-        "model_type": "BaselineDemo",
-        # "cfg_path": "./configs/baseline/baseline_GREW.yaml",
-        "cfg_path": "./configs/gaitbase/gaitbase_da_gait3d.yaml",
-    },
-}
-
+from opengait.utils import config_loader
 
 def loadModel(model_type, cfg_path):
     Model = getattr(baselineDemo, model_type)
     cfgs = config_loader(cfg_path)
     model = Model(cfgs, training=False)
     return model
+
+gaitmodel = loadModel(**recognise_cfgs["gaitmodel"])
+print ('Done initialize model into gpu')
+
 
 def gait_sil(sils, embs_save_path):
     """Gets the features.
@@ -36,7 +33,6 @@ def gait_sil(sils, embs_save_path):
     Returns:
         feats (dict): Dictionary of features
     """
-    gaitmodel = loadModel(**recognise_cfgs["gaitmodel"])
     gaitmodel.requires_grad_(False)
     gaitmodel.eval()
     feats = {}
@@ -70,7 +66,6 @@ def gait_sil_modified(sils):
     Returns:
         feats (dict): Dictionary of features
     """
-    gaitmodel = loadModel(**recognise_cfgs["gaitmodel"])
     gaitmodel.requires_grad_(False)
     gaitmodel.eval()
     feats = {}

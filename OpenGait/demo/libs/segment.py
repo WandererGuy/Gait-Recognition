@@ -9,7 +9,6 @@ import math
 import numpy as np
 from tqdm import tqdm
 import time 
-import paddle 
 # from tracking_utils.predictor import Predictor
 # from yolox.utils import fuse_model, get_model_info
 # from loguru import logger
@@ -18,20 +17,12 @@ import paddle
 # from tracking_utils.visualize import plot_tracking, plot_track
 from pretreatment import pretreat, imgs2inputs
 sys.path.append((os.path.dirname(os.path.abspath(__file__) )) + "/paddle/")
+
 from seg_demo import seg_image_modified, seg_image
 # from yolox.exp import get_exp
-from parameters import config_gpu, seg_cfgs
+from config_seg import seg_cfgs
 
-from paddleseg.utils import get_sys_env, logger, get_image_list
-
-def check_gpu_available():
-    env_info = get_sys_env()
-    print ('Paddle compiled with cuda:', env_info['Paddle compiled with cuda'] )
-    print ('GPUs used:', env_info['GPUs used'])
-    config_gpu = True if env_info['Paddle compiled with cuda'] \
-        and env_info['GPUs used'] else False
-    print ('config_gpu (use gpu) available:', config_gpu)
-
+# from paddleseg.utils import get_sys_env, logger, get_image_list
 import pickle
 
 def track_crop(video_path, track_result_pickle):
@@ -64,7 +55,7 @@ def track_crop(video_path, track_result_pickle):
     for i in tqdm(range(frame_count)):
         ret_val, frame = cap.read()
         if ret_val:
-            if frame_id in ids and frame_id%4==0:
+            if frame_id in ids:
                 # print ("frame_id: ", frame_id)
                 for tidxywh in track_result[frame_id]:
                     tid = tidxywh[0]
@@ -138,7 +129,7 @@ def imageflow_demo_single_frame(image_path, save_image_path):
         tmp_new = tmp_new.astype(np.uint8)
         tmp = cv2.resize(tmp_new,(192,192))
         start = time.time()
-        seg_image_modified(tmp, seg_cfgs["model"]["seg_model"], save_image_path, config_gpu)
+        seg_image_modified(tmp, save_image_path)
         # print ("seg_process_time 1 frame ", time.time() - start)
          
 
@@ -168,7 +159,7 @@ def imageflow_demo_no_video(video_name, sil_save_path, tid, folder_track_path, f
             tmp_new = tmp_new.astype(np.uint8)
             tmp = cv2.resize(tmp_new,(192,192))
             start = time.time()
-            seg_image(tmp, seg_cfgs["model"]["seg_model"], save_name, savesil_path, config_gpu)
+            seg_image(tmp, save_name, savesil_path)
             # print ("seg_process_time 1 frame ", time.time() - start)
             ch = cv2.waitKey(1)
             if ch == 27 or ch == ord("q") or ch == ord("Q"):
@@ -253,7 +244,7 @@ def imageflow_demo_modified(video_path, track_result, sil_save_path, save_video_
                     tmp = cv2.resize(tmp_new,(192,192))
 
                     start = time.time()
-                    seg_image(tmp, seg_cfgs["model"]["seg_model"], save_name, savesil_path, config_gpu)
+                    seg_image(tmp, save_name, savesil_path)
                     # print ("seg_process_time 1 frame ", time.time() - start)
 
             ch = cv2.waitKey(1)
@@ -342,7 +333,7 @@ def imageflow_demo(video_path, track_result, sil_save_path, save_video_name, fra
                     tmp = cv2.resize(tmp_new,(192,192))
 
                     start = time.time()
-                    seg_image(tmp, seg_cfgs["model"]["seg_model"], save_name, savesil_path, config_gpu)
+                    seg_image(tmp, save_name, savesil_path)
                     # print ("seg_process_time 1 frame ", time.time() - start)
 
             ch = cv2.waitKey(1)

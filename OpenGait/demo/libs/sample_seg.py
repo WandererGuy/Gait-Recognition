@@ -1,13 +1,15 @@
+print("............. Initialization .............")
+from fastapi import FastAPI, HTTPException, Form, Request
+app = FastAPI()
 import os 
 import sys
 from utils_server.api_server import *
 
-sys.path.append(os.path.abspath('.') + "/demo/libs/")
-from segment import *
 import ast
-from fastapi import FastAPI, HTTPException, Form, Request
 import uvicorn
 import configparser
+
+
 config = configparser.ConfigParser()
 current_script_directory = os.path.dirname(os.path.abspath(__file__))
 config.read(current_script_directory +'/config.ini')
@@ -27,8 +29,15 @@ os.makedirs(sil_save_path, exist_ok=True)
 
 tid = 1
 tid = "{:06d}".format(tid)
-app = FastAPI()
-    
+
+print(".............importing segment modules.............")
+from pathlib import Path
+from segment import seg_single_frame,\
+                    seg_no_video,\
+                    getsil_modified
+
+print(".............Initialization complete.............")
+
 
 @app.post("/extract-segment-folder") 
 # already segment before , have segment folder
@@ -176,7 +185,8 @@ async def segment_adding_frame(image_path: str = Form(...),
 
 def main():
     print('INITIALIZING FASTAPI SERVER')
-    uvicorn.run("sample_seg:app", host=host_ip, port=int(seg_port_num), reload=True)
+    uvicorn.run(app, host=host_ip, port=int(seg_port_num), reload=False)
+    # uvicorn.run("sample_seg:app", host=host_ip, port=int(seg_port_num), reload=True)
 
 
 if __name__ == "__main__":

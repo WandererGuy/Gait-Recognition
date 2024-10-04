@@ -21,12 +21,13 @@ import numpy as np
 from tqdm import tqdm
 from PIL import Image
 
+
 __dir__ = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.abspath(os.path.join(__dir__, '../../../')))
+from init_model import predictor
 from paddleseg.utils import get_sys_env, logger, get_image_list
 # from paddleseg.utils import get_sys_env, logger, get_image_list
 
-from infer import Predictor_opengait
 
 
 def parse_args():
@@ -88,8 +89,7 @@ def makedirs(save_dir):
     if not os.path.exists(dirname):
         os.makedirs(dirname)
 
-def seg_image(img, config, save_name, savesil_path, config_gpu):
-    predictor = Predictor_opengait(config, config_gpu)
+def seg_image(img, save_name, savesil_path):
     bg_img = 255 * np.ones(img.shape)
     out_img, out_mask = predictor.run(img, bg_img)
     therehold = 80
@@ -100,8 +100,7 @@ def seg_image(img, config, save_name, savesil_path, config_gpu):
     savesil_name = os.path.join(savesil_path, save_name)
     cv2.imwrite(savesil_name, out_mask)
 
-def seg_image_modified(img, config, save_image_path, config_gpu):
-    predictor = Predictor_opengait(config, config_gpu)
+def seg_image_modified(img, save_image_path):
     bg_img = 255 * np.ones(img.shape)
     out_img, out_mask = predictor.run(img, bg_img)
     therehold = 80
@@ -216,20 +215,20 @@ def seg_camera(args):
     cap_camera.release()
 
 
-if __name__ == "__main__":
-    args = parse_args()
-    env_info = get_sys_env()
-    print ('Paddle compiled with cuda:', env_info['Paddle compiled with cuda'] )
-    print ('GPUs used:', env_info['GPUs used'])
-    args.use_gpu = True if env_info['Paddle compiled with cuda'] \
-        and env_info['GPUs used'] else False
-    print ('use_gpu:', args.use_gpu)
+# if __name__ == "__main__":
+#     args = parse_args()
+#     env_info = get_sys_env()
+#     print ('Paddle compiled with cuda:', env_info['Paddle compiled with cuda'] )
+#     print ('GPUs used:', env_info['GPUs used'])
+#     args.use_gpu = True if env_info['Paddle compiled with cuda'] \
+#         and env_info['GPUs used'] else False
+#     print ('use_gpu:', args.use_gpu)
 
-    makedirs(args.save_dir)
+#     makedirs(args.save_dir)
 
-    if args.img_path is not None:
-        seg_image(args)
-    elif args.video_path is not None:
-        seg_video(args)
-    else:
-        seg_camera(args)
+#     if args.img_path is not None:
+#         seg_image(args)
+#     elif args.video_path is not None:
+#         seg_video(args)
+#     else:
+#         seg_camera(args)
