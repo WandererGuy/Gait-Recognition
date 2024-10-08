@@ -146,7 +146,7 @@ def imageflow_demo_no_video(video_name, sil_save_path, tid, folder_track_path, f
             # Read the image from a file
             frame = cv2.imread(file_path)
             tmp = frame
-            save_name = "{:06d}-{:06d}.png".format(tid, id)
+            save_name = "{}.png".format(filename.split(".")[0])
             # Get the dimensions of the image
             # no need to extend crop like normal 
             new_h, new_w, _ = tmp.shape
