@@ -1,164 +1,164 @@
 Item 0
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5167526383877495248/001
- 14.7141
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/5167526383877495248/001
+ 14.61993
 
 Item 1
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5167526383877495248/003
- 15.05165
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/5167526383877495248/003
+ 14.99008
 
 Item 2
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/di ra 03h13p/001
- 15.37728
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/5167526383877495248/007
+ 15.369
 
 Item 3
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5167526383877495248/007
- 15.48291
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/5652104598115489538 (1)/004
+ 15.40287
 
 Item 4
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5652104598115489538 (1)/004
- 15.5013
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/di ra 03h13p/001
+ 15.42413
 
 Item 5
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/001
- 15.52761
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/001
+ 15.54427
 
 Item 6
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5234757553247363443/001
- 15.53907
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/5234757553247363443/001
+ 15.54581
 
 Item 7
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5167526383877495248/005
- 16.01484
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/5167526383877495248/005
+ 15.94655
 
 Item 8
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/003
- 16.05993
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/003
+ 16.04198
 
 Item 9
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/008
- 16.14542
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/002
+ 16.12916
 
 Item 10
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/002
- 16.26424
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/008
+ 16.16074
 
 Item 11
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8300278661057155957/002
- 16.323
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/8300278661057155957/002
+ 16.27
 
 Item 12
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/014
- 16.51868
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/014
+ 16.47816
 
 Item 13
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/012
- 16.70483
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/8328534836514339442/012
+ 16.71247
 
 Item 14
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/7180747282665697279/002
- 16.76983
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/009
+ 16.76655
 
 Item 15
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/009
- 16.81873
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/7180747282665697279/002
+ 16.82661
 
 Item 16
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8300278661057155957/001
- 16.90349
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/8300278661057155957/001
+ 16.90158
 
 Item 17
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/005
- 17.03166
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/013
+ 16.93517
 
 Item 18
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/004
- 17.07669
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/015
+ 17.0206
 
 Item 19
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/013
- 17.07829
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/005
+ 17.0442
 
 Item 20
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/015
- 17.08762
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/8328534836514339442/004
+ 17.06204
 
 Item 21
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/010
- 17.22251
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/010
+ 17.14137
 
 Item 22
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/006
- 17.2415
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/011
+ 17.21966
 
 Item 23
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/011
- 17.30436
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/8328534836514339442/006
+ 17.23652
 
 Item 24
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8300278661057155957/003
- 17.31486
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/8328534836514339442/002
+ 17.32641
 
 Item 25
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/007
- 17.32003
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/8300278661057155957/003
+ 17.34289
 
 Item 26
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/004
- 17.32248
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/007
+ 17.34715
 
 Item 27
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5234757553247363443/002
- 17.39486
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/5234757553247363443/002
+ 17.35945
 
 Item 28
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/002
- 17.41137
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/004
+ 17.53016
 
 Item 29
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/009
- 17.81404
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/5167526383877495248/006
+ 17.74324
 
 Item 30
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5167526383877495248/006
- 17.86458
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/016
+ 17.76728
 
 Item 31
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/016
- 17.87201
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/8328534836514339442/009
+ 17.83451
 
 Item 32
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5167526383877495248/004
- 17.94667
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/012
+ 17.98319
 
 Item 33
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/003
- 18.04224
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/5167526383877495248/004
+ 17.99546
 
 Item 34
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/012
- 18.05194
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/8328534836514339442/003
+ 18.02453
 
 Item 35
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/7180747282665697279/003
- 18.05936
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/7180747282665697279/003
+ 18.08898
 
 Item 36
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/001
- 18.14207
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/8328534836514339442/001
+ 18.12754
 
 Item 37
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/8328534836514339442/010
- 18.21396
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/8328534836514339442/010
+ 18.20827
 
 Item 38
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/5167526383877495248/002
- 19.15653
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/5167526383877495248/002
+ 19.13268
 
 Item 39
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/C0103/017
- 19.22802
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/C0103/017
+ 19.16179
 
 Item 40
- /home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/7180747282665697279/001
- 19.41642
+ C:/MANH_T04/Gait-Recognition/OpenGait/demo/output/TrackingResult/7180747282665697279/001
+ 19.45108
 

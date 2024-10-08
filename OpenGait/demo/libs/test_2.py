@@ -6,6 +6,8 @@ import aiofiles
 import os
 from aiohttp import ClientError
 import pickle
+from utils_server.api_server import *
+
 person_log_file = "demo/logs/log_person.txt"
 error_log_file = "demo/logs/log_error.log"
 compare_log_file = "demo/logs/log_compare.txt"
@@ -29,7 +31,7 @@ rec_url = f"http://{host_ip}:{rec_port_num}/extract-sil-function-v0"
 min_segment_valid = 5 
 segment_frame_skip = 4
 min_track_frame_sequence = (min_segment_valid-1)*segment_frame_skip +1 
-folder_track = "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult"
+folder_track = os.path.join(os.path.dirname(current_script_directory),"output/TrackingResult")
 
 p = "demo/libs/pickle_variables"
 q = os.path.join(p, "people_session_info")
@@ -84,7 +86,6 @@ async def process_video(person, session, sem):
             person.update_sil_pickle_path(sil_path)
             embedding_path = await extract_embed(person_folder_track_path, sil_path, session)
             person.update_embedding_path(embedding_path)
-            print(f"Processed video {item} -> Embedding path: {embedding_path}")
             person.mark_processed()
             return person
         except asyncio.TimeoutError:
@@ -131,18 +132,18 @@ class Person:
         self.error_message = None
 
     def update_video_folder_track_path(self, path):
-        self.video_folder_track_path = path
+        self.video_folder_track_path = fix_path(path)
 
     def update_folder_track_path(self, path):
-        self.person_folder_track_path = path
+        self.person_folder_track_path = fix_path(path)
 
     def update_type(self, type):
         self.type = type
     def update_sil_pickle_path(self, path):
-        self.sil_pickle_path = path
+        self.sil_pickle_path = fix_path(path)
 
     def update_embedding_path(self, path):
-        self.embedding_path = path
+        self.embedding_path = fix_path(path)
 
     def mark_processed(self):
         self.processed = True
@@ -203,5 +204,5 @@ if __name__ == "__main__":
             
     with open(save_info_pkl, "wb") as f:
         pickle.dump(save_info_ls, f)
-    print (f"Saved people results to {save_info_pkl}.")
+    print (f"Saved people results to {save_info_pkl}")
 

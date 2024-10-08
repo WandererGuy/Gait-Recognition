@@ -1,10 +1,18 @@
 import os 
 import pickle 
+import configparser
+import requests
 
+from utils_server.api_server import *
+config = configparser.ConfigParser()
+current_script_directory = os.path.dirname(os.path.abspath(__file__))
+config.read(current_script_directory +'/config.ini')
+host_ip = config['DEFAULT']['host'] 
+rec_port_num = config['DEFAULT']['rec_port_num']
+compare_url = f"http://{host_ip}:{rec_port_num}/compare-embeddings-short"
 def multi_gallery_vs_single_probe(probe_feat_path, gallery_feat_path):
-    import requests
 
-    url = "http://10.0.68.103:2003/compare-embeddings-short"
+    url = compare_url
     payload = {'probe_feat_path': probe_feat_path,
     'list_gallery_feat_path': gallery_feat_path}
     files=[
@@ -27,15 +35,18 @@ def multi_gallery_vs_single_probe(probe_feat_path, gallery_feat_path):
 if __name__ == "__main__":
     current_script_directory = os.path.dirname(os.path.abspath(__file__))
     tmp = os.path.dirname(current_script_directory)
-
-    probe_person_folder_track_path_ls = [os.path.join(tmp,'output/TrackingResult/di vao 01h28p/001')]
+    probe_example = fix_path(os.path.join(tmp,'output/TrackingResult/di vao 01h28p/001'))
+    print ('--------------------------------------------------------')
+    print (tmp)
+    probe_person_folder_track_path_ls = [probe_example]
 
 
     # probe_person_folder_track_path_ls = ["di vao 01h28p", "di ra 03h13p"]
 
     p = "demo/libs/pickle_variables"
     q = os.path.join(p, "people_session_info")
-    pickle_file_name = "7c536af5-8b9d-4e61-a98c-0f73ff5bd382.pkl"
+    # pickle_file_name = "7c536af5-8b9d-4e61-a98c-0f73ff5bd382.pkl"
+    pickle_file_name = "89dcd812-1287-4aca-8bb3-3c27036ce639.pkl"
     pickle_file_path = os.path.join(q, pickle_file_name)
 
 
@@ -49,7 +60,6 @@ if __name__ == "__main__":
     with open (pickle_file_path, 'rb') as file:
         data = pickle.load(file)
         for person in data:
-            print (person  )
             if person["person_folder_track_path"] in probe_person_folder_track_path_ls:
                 probe_dict[person["person_folder_track_path"]] = person["embedding_path"]
             else:
