@@ -24,7 +24,7 @@ host_ip = config['DEFAULT']['host']
 seg_port_num = config['DEFAULT']['seg_port_num'] 
 rec_port_num = config['DEFAULT']['rec_port_num']
 seg_url = f"http://{host_ip}:{seg_port_num}/segment-no-video"
-rec_url = f"http://{host_ip}:{rec_port_num}/extract-sil-function"
+rec_url = f"http://{host_ip}:{rec_port_num}/extract-sil-function-v0"
 
 min_segment_valid = 5 
 segment_frame_skip = 4

@@ -35,7 +35,38 @@ os.makedirs(compare_session_folder, exist_ok=True)
 print(".............Initialization complete.............")
 
 
+@app.post("/extract-sil-function-v0")
+async def extract_sil_function_v0(sil_pickle_path: str = Form(...)):
+    sil_pickle_path = Path(sil_pickle_path)
+    tmp = sil_pickle_path.name.split(".")[0]
+    rec_output_pickle = os.path.join(pickle_path_rec, tmp + ".pkl")
+    with open (sil_pickle_path, 'rb') as file:
+        silhouette = pickle.load(file)
+    if silhouette != []:
+        # recognise
+        # if not os.path.exists(rec_output_pickle):
+        video_feat = extract_sil_modified(silhouette)
+        with open(rec_output_pickle, 'wb') as file:
+            pickle.dump(video_feat, file)
+        print ('done recognise')
 
+        res = {
+                "status": 1,
+                "error_code": None,
+                "error_message": None,
+                "result":
+                    {
+                        "embedding_path": fix_path(rec_output_pickle)
+                    }
+                }
+    else: 
+        res = {
+                "status": 0,
+                "error_code": 400,
+                "error_message": "Sil result is empty already, check segment phase again",
+                "result": None
+                } 
+    return res
 
 @app.post("/extract-sil-function")
 async def extract_sil_function(sil_pickle_path: str = Form(...)):

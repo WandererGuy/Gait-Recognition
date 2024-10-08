@@ -25,7 +25,10 @@ def multi_gallery_vs_single_probe(probe_feat_path, gallery_feat_path):
             
 
 if __name__ == "__main__":
-    probe_person_folder_track_path_ls = ['/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult/di vao 01h28p/001']
+    current_script_directory = os.path.dirname(os.path.abspath(__file__))
+    tmp = os.path.dirname(current_script_directory)
+
+    probe_person_folder_track_path_ls = [os.path.join(tmp,'output/TrackingResult/di vao 01h28p/001')]
 
 
     # probe_person_folder_track_path_ls = ["di vao 01h28p", "di ra 03h13p"]
