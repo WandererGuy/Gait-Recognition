@@ -50,6 +50,13 @@ async def extract_sil_function(sil_pickle_path: str = Form(...)):
         video_feat = extract_sil_modified(silhouette)
         with open(rec_output_pickle, 'wb') as file:
             pickle.dump(video_feat, file)
+        
+        value1=video_feat[list(video_feat.keys())[0]][0][list(video_feat[list(video_feat.keys())[0]][0].keys())[0]][list(video_feat[list(video_feat.keys())[0]][0][list(video_feat[list(video_feat.keys())[0]][0].keys())[0]].keys())[0]].cpu()
+
+        flattened_array = value1.numpy().flatten()
+        string_emb=str(flattened_array[0])
+        for i in range(1,len(flattened_array),1):
+            string_emb=string_emb+","+str(flattened_array[i])
         print ('done recognise')
 
         res = {
@@ -58,7 +65,7 @@ async def extract_sil_function(sil_pickle_path: str = Form(...)):
                 "error_message": None,
                 "result":
                     {
-                        "embedding_path": fix_path(rec_output_pickle)
+                        "embedding_path": string_emb
                     }
                 }
     else: 
