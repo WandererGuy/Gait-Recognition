@@ -29,7 +29,7 @@ rec_url = f"http://{host_ip}:{rec_port_num}/extract-sil-function"
 min_segment_valid = 5 
 segment_frame_skip = 4
 min_track_frame_sequence = (min_segment_valid-1)*segment_frame_skip +1 
-folder_track = "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResultTest"
+folder_track = "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/output/TrackingResult"
 
 p = "demo/libs/pickle_variables"
 q = os.path.join(p, "people_session_info")
@@ -203,3 +203,4 @@ if __name__ == "__main__":
             
     with open(save_info_pkl, "wb") as f:
         pickle.dump(save_info_ls, f)
+    print (f"Saved people results to {save_info_pkl}.")

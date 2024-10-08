@@ -9,12 +9,7 @@ import math
 import numpy as np
 from tqdm import tqdm
 import time 
-# from tracking_utils.predictor import Predictor
-# from yolox.utils import fuse_model, get_model_info
-# from loguru import logger
-# from tracker.byte_tracker import BYTETracker
-# from tracking_utils.timer import Timer
-# from tracking_utils.visualize import plot_tracking, plot_track
+
 from pretreatment import pretreat, imgs2inputs
 sys.path.append((os.path.dirname(os.path.abspath(__file__) )) + "/paddle/")
 
@@ -25,63 +20,6 @@ from config_seg import seg_cfgs
 # from paddleseg.utils import get_sys_env, logger, get_image_list
 import pickle
 
-def track_crop(video_path, track_result_pickle):
-    """Cuts the video image according to the tracking result to obtain the silhouette
-
-    Args:
-        video_path (Path): Path of input video
-        track_result (dict): Track information
-        sil_save_path (Path): The root directory where the silhouette is stored
-    Returns:
-        Path: The directory of silhouette
-    """
-    output_track_folder = "demo/output/TrackingResult"
-    os.makedirs(output_track_folder, exist_ok=True)
-    track_result = pickle.load(open(track_result_pickle, 'rb'))
-    cap = cv2.VideoCapture(video_path)
-    width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)  # float
-    height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)  # float
-    frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
-    frame_id = 0
-    fps = cap.get(cv2.CAP_PROP_FPS)
-    save_video_name = video_path.split("/")[-1]
-
-    save_video_name = save_video_name.split(".")[0]
-    track_video_folder = osp.join(output_track_folder, save_video_name)
-    os.makedirs(track_video_folder, exist_ok=True)
-    results = []
-    ids = list(track_result.keys())
-    # print (ids)
-    for i in tqdm(range(frame_count)):
-        ret_val, frame = cap.read()
-        if ret_val:
-            if frame_id in ids:
-                # print ("frame_id: ", frame_id)
-                for tidxywh in track_result[frame_id]:
-                    tid = tidxywh[0]
-
-                    tidstr = "{:03d}".format(tid)
-                    tid_folder = os.path.join(track_video_folder, tidstr)
-                    os.makedirs(tid_folder, exist_ok=True)
-
-                    x = tidxywh[1]
-                    y = tidxywh[2]
-                    width = tidxywh[3]
-                    height = tidxywh[4]
-
-                    x1, y1, x2, y2 = int(x), int(y), int(x + width), int(y + height)
-                    w, h = x2 - x1, y2 - y1
-                    x1_new = max(0, int(x1 - 0.1 * w))
-                    x2_new = min(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(x2 + 0.1 * w))
-                    y1_new = max(0, int(y1 - 0.1 * h))
-                    y2_new = min(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)), int(y2 + 0.1 * h))
-                    
-                    tmp = frame[y1_new: y2_new, x1_new: x2_new, :]
-                    save_name = "{:03d}-{:03d}.png".format(tid, frame_id)
-                    path_save = osp.join(tid_folder, save_name)
-                    # print (path_save)
-                    cv2.imwrite(path_save, tmp)
-        frame_id = frame_id + 1
 
 
 
@@ -195,7 +133,7 @@ def imageflow_demo_modified(video_path, track_result, sil_save_path, save_video_
         ret_val, frame = cap.read()
     
         if ret_val:
-            if frame_id in ids and frame_id%4==0: # crop out of frame track target every 4 frames 
+            if frame_id in ids: # crop out of frame track target every 4 frames 
 
                 for tidxywh in track_result[frame_id]:
 

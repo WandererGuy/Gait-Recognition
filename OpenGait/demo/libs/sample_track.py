@@ -38,8 +38,7 @@ track_port_num = config['DEFAULT']['track_port_num']
 
 
 @app.post("/tracking")
-async def tracking(video_path: str = Form(...)):
-    print ('gayyy')
+async def tracking(video_path: str = Form(...), track_skip_frames: int = Form(...)):
     os.makedirs(output_dir, exist_ok=True)
     # current_time = time.localtime()
     # timestamp = time.strftime("%Y_%m_%d_%H_%M_%S", current_time)
@@ -47,29 +46,30 @@ async def tracking(video_path: str = Form(...)):
 
     video_save_folder = osp.join(output_dir, save_video_name)
     # tracking
-    track_result = track(video_path, video_save_folder, save_video_name + '.mp4')
-    tmp = os.path.join(track_pickle_path, save_video_name)
-    with open(tmp, 'wb') as file:
-        pickle.dump(track_result, file)
-    output_video_path = os.path.join(video_save_folder, save_video_name + '.mp4')
-    output_video_path = Path(output_video_path)
+    track_result = track(video_path, video_save_folder, save_video_name + '.mp4', track_skip_frames)
+    print (track_result)
+    track_video_folder = track_crop(video_path, track_result)
+    # with open(tmp, 'wb') as file:
+    #     pickle.dump(track_result, file)
+    # output_video_path = os.path.join(video_save_folder, save_video_name + '.mp4')
+    # output_video_path = Path(output_video_path)
     output = {
         "status": 1,
         "error_code": None,
         "error_message": None,
         "result":
             {
-        "output_video_path": fix_path(output_video_path),
-        "track_pickle_path": fix_path(tmp)
+        "track_video_folder": fix_path(track_video_folder)
             }
     }
-    print ('Done tracking')
+    print (f'Done tracking, saved in {fix_path(track_video_folder)}')
     return output
     
     
 def main():
     print('INITIALIZING FASTAPI SERVER')
-    uvicorn.run("sample_track:app", host=host_ip, port=int(track_port_num), reload=True)
+    # uvicorn.run("sample_track:app", host=host_ip, port=int(track_port_num), reload=True)
+    uvicorn.run(app, host=host_ip, port=int(track_port_num), reload=False)
 
 if __name__ == "__main__":
     main()

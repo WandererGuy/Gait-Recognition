@@ -2,7 +2,7 @@
 
 # video_path = "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/dang_di_sample/Mau GD/Doi tuong 4 ngay 24-3-2021/5167526383877495248.mp4"
 # track_result_pickle = "/home/ai-ubuntu/hddnew/Manh/GAIT_RECOG/OpenGait/demo/libs/pickle_variables/track/bed0c427-6a0d-4968-ab96-5cfaf8074862"
-# track_crop(video_path, track_result_pickle)
+# track_crop(vdieo_path, track_result_pickle)
 
 
 # video_dict = {

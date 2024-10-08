@@ -20,6 +20,9 @@ sys.path.append((os.path.dirname(os.path.abspath(__file__) )) + "/paddle/")
 # from seg_demo import seg_image
 from yolox.exp import get_exp
 
+output_track_folder = "demo/output/TrackingResult"
+os.makedirs(output_track_folder, exist_ok=True)
+
 track_cfgs = {  
     "model":{
         # "seg_model" : "./demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml",
@@ -62,7 +65,7 @@ exp = get_exp(track_cfgs["model"]["exp_file"], None)
 model = loadckpt(exp)
 print ("load model done")
 
-def track(video_path, video_save_folder, save_video_name):
+def track(video_path, video_save_folder, save_video_name, track_skip_frames):
     """Tracks person in the input video
     
     Args:
@@ -97,9 +100,11 @@ def track(video_path, video_save_folder, save_video_name):
     track_results={}
     mark = True
     diff = 0
+    track_skip_frames = track_skip_frames + 1 
     for i in tqdm(range(frame_count)):
         ret_val, frame = cap.read()
-        if ret_val:
+        if ret_val and i%track_skip_frames==0:
+            print ("frame_id: ", i)
             outputs, img_info = predictor.inference(frame, timer)
             if outputs[0] is not None:
                 online_targets = tracker.update(outputs[0], [img_info['height'], img_info['width']], exp.test_size)
@@ -246,3 +251,59 @@ def writeresult(pgdict, video_path, video_save_folder):
     #     with open(res_file, 'w') as f:
     #         f.writelines(results)
     #     logger.info(f"save results to {res_file}")
+import pickle 
+def track_crop(video_path, track_result):
+    """Cuts the video image according to the tracking result to obtain the silhouette
+
+    Args:
+        video_path (Path): Path of input video
+        track_result (dict): Track information
+        sil_save_path (Path): The root directory where the silhouette is stored
+    Returns:
+        Path: The directory of silhouette
+    """
+    cap = cv2.VideoCapture(video_path)
+    width = cap.get(cv2.CAP_PROP_FRAME_WIDTH)  # float
+    height = cap.get(cv2.CAP_PROP_FRAME_HEIGHT)  # float
+    frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+    frame_id = 0
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    save_video_name = video_path.split("/")[-1]
+
+    save_video_name = save_video_name.split(".")[0]
+    track_video_folder = osp.join(output_track_folder, save_video_name)
+    os.makedirs(track_video_folder, exist_ok=True)
+    results = []
+    ids = list(track_result.keys())
+    # print (ids)
+    for i in tqdm(range(frame_count)):
+        ret_val, frame = cap.read()
+        if ret_val:
+            if frame_id in ids:
+                # print ("frame_id: ", frame_id)
+                for tidxywh in track_result[frame_id]:
+                    tid = tidxywh[0]
+
+                    tidstr = "{:03d}".format(tid)
+                    tid_folder = os.path.join(track_video_folder, tidstr)
+                    os.makedirs(tid_folder, exist_ok=True)
+
+                    x = tidxywh[1]
+                    y = tidxywh[2]
+                    width = tidxywh[3]
+                    height = tidxywh[4]
+
+                    x1, y1, x2, y2 = int(x), int(y), int(x + width), int(y + height)
+                    w, h = x2 - x1, y2 - y1
+                    x1_new = max(0, int(x1 - 0.1 * w))
+                    x2_new = min(int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), int(x2 + 0.1 * w))
+                    y1_new = max(0, int(y1 - 0.1 * h))
+                    y2_new = min(int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)), int(y2 + 0.1 * h))
+                    
+                    tmp = frame[y1_new: y2_new, x1_new: x2_new, :]
+                    save_name = "{:03d}-{:03d}.png".format(tid, frame_id)
+                    path_save = osp.join(tid_folder, save_name)
+                    # print (path_save)
+                    cv2.imwrite(path_save, tmp)
+        frame_id = frame_id + 1
+    return track_video_folder

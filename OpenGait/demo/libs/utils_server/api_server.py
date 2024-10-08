@@ -192,3 +192,17 @@ def check_directories_in_folder(folder_path):
         return True
     else:
         return False
+
+
+def monitor_gpu_usage():
+    import torch 
+    # Print the amount of memory allocated by tensors
+    print(f"Allocated memory: {torch.cuda.memory_allocated() / 1024**2} MB")
+
+    # Print the amount of memory reserved (total memory reserved by PyTorch)
+    print(f"Reserved memory: {torch.cuda.memory_reserved() / 1024**2} MB")
+
+    # Print the max memory that was allocated during execution
+    print(f"Max allocated memory: {torch.cuda.max_memory_allocated() / 1024**2} MB")
+    
+    print (f"summary: {torch.cuda.memory_summary()}")

@@ -76,11 +76,13 @@ def gait_sil_modified(sils):
             feats[id] = []
         type = inputs[2][0] 
         view = inputs[3][0]
+        
         retval, embs = gaitmodel.forward(ipts)
         feat = {}
         feat[type] = {}
         feat[type][view] = embs
         feats[id].append(feat)    
+        
     return feats    
 def gaitfeat_compare(gallery_feat:dict, probe_feat:dict, mode):
     """Compares the feature between gallery and probe
