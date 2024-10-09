@@ -13,7 +13,9 @@ print ("paddle compiled with cuda:", config_gpu)
 print ("decide to use gpu for paddle segmentation:", config_gpu)
 from pathlib import Path
 
-seg_yaml = "./demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml"
+# seg_yaml = "./demo/checkpoints/seg_model/human_pp_humansegv2_mobile_192x192_inference_model_with_softmax/deploy.yaml"
+seg_yaml = "./demo/checkpoints/seg_model/human_pp_humansegv1_server_512x512_inference_model_with_softmax/deploy.yaml"
+
 seg_yaml = Path(seg_yaml)
 seg_cfgs = {  
     "model":{

@@ -7,12 +7,13 @@ import os
 from aiohttp import ClientError
 import pickle
 from utils_server.api_server import *
-
+from pathlib import Path
 person_log_file = "demo/logs/log_person.txt"
 error_log_file = "demo/logs/log_error.log"
 compare_log_file = "demo/logs/log_compare.txt"
+log_track_segment_img_file = "demo/logs/log_track_segment_img.txt"
 
-for log_file in [compare_log_file, person_log_file, error_log_file]:
+for log_file in [compare_log_file, person_log_file, error_log_file, log_track_segment_img_file]:
     with open(log_file, "w") as f:
         pass
 
@@ -31,7 +32,7 @@ rec_url = f"http://{host_ip}:{rec_port_num}/extract-sil-function-v0"
 min_segment_valid = 5 
 segment_frame_skip = 4
 min_track_frame_sequence = (min_segment_valid-1)*segment_frame_skip +1 
-folder_track = os.path.join(os.path.dirname(current_script_directory),"output/TrackingResult")
+folder_track = os.path.join(os.path.dirname(current_script_directory),"output/TrackingResultTest")
 
 p = "demo/libs/pickle_variables"
 q = os.path.join(p, "people_session_info")
@@ -66,7 +67,7 @@ async def fetch_with_retries(session, url, data, retries=3, backoff_factor=0.5):
 
 # Segment video
 async def segment_video(person_folder_track_path, session):
-    payload = {'folder_track_path': person_folder_track_path, 'frame_skip_num': '4'}
+    payload = {'folder_track_path': person_folder_track_path, 'frame_skip_num': '0'}
     response_json = await fetch_with_retries(session, seg_url, payload)
     sil_pickle_path = response_json["result"]["sil_pickle_path"]
     return person_folder_track_path, sil_pickle_path
@@ -201,7 +202,18 @@ if __name__ == "__main__":
             # Write the ID and attributes to the file
             log_file.write(f"Attributes: {person_attributes}\n")
             log_file.write('-----------------------------------------------------\n')
-            
+    with open (log_track_segment_img_file, "a") as f:
+                for index, person in enumerate(results):
+                    f.write (f"Item {index}:\n")
+                    if isinstance(person, Exception):  # Spot exceptions
+                        print(f"Task raised an exception: {person}")
+                        continue
+                    person_folder_track_path = person.person_folder_track_path
+                    f.write(f"{person_folder_track_path}\n")
+                    sil_folder = os.path.join(os.path.dirname(current_script_directory),"output/GaitSilhouette", Path(person.sil_pickle_path).name.split(".")[0])
+                    f.write(f"{fix_path(sil_folder)}\n")
+                    f.write('-----------------------------------------------------\n')
+
     with open(save_info_pkl, "wb") as f:
         pickle.dump(save_info_ls, f)
     print (f"Saved people results to {save_info_pkl}")

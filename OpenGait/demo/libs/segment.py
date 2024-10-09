@@ -44,7 +44,7 @@ import pickle
 #     height = math.floor((side-new_h)/2)
 #     tmp_new[int(height):int(height+new_h),int(width):int(width+new_w),:] = tmp
 #     tmp_new = tmp_new.astype(np.uint8)
-#     tmp = cv2.resize(tmp_new,(192,192))
+#     tmp = cv2.resize(tmp_new,(512,512))
 #     start = time.time()
 #     seg_image(tmp, seg_cfgs["model"]["seg_model"], save_name, savesil_path, config_gpu)
 #     # print ("seg_process_time 1 frame ", time.time() - start)
@@ -65,7 +65,7 @@ def imageflow_demo_single_frame(image_path, save_image_path):
         height = math.floor((side-new_h)/2)
         tmp_new[int(height):int(height+new_h),int(width):int(width+new_w),:] = tmp
         tmp_new = tmp_new.astype(np.uint8)
-        tmp = cv2.resize(tmp_new,(192,192))
+        tmp = cv2.resize(tmp_new,(512,512))
         start = time.time()
         seg_image_modified(tmp, save_image_path)
         # print ("seg_process_time 1 frame ", time.time() - start)
@@ -95,7 +95,7 @@ def imageflow_demo_no_video(video_name, sil_save_path, tid, folder_track_path, f
             height = math.floor((side-new_h)/2)
             tmp_new[int(height):int(height+new_h),int(width):int(width+new_w),:] = tmp
             tmp_new = tmp_new.astype(np.uint8)
-            tmp = cv2.resize(tmp_new,(192,192))
+            tmp = cv2.resize(tmp_new,(512,512))
             start = time.time()
             seg_image(tmp, save_name, savesil_path)
             # print ("seg_process_time 1 frame ", time.time() - start)
@@ -179,7 +179,7 @@ def imageflow_demo_modified(video_path, track_result, sil_save_path, save_video_
                     tmp_new[int(height):int(height+new_h),int(width):int(width+new_w),:] = tmp
                     # so a white canvas with tmp in the center 
                     tmp_new = tmp_new.astype(np.uint8)
-                    tmp = cv2.resize(tmp_new,(192,192))
+                    tmp = cv2.resize(tmp_new,(512,512))
 
                     start = time.time()
                     seg_image(tmp, save_name, savesil_path)
@@ -268,7 +268,7 @@ def imageflow_demo(video_path, track_result, sil_save_path, save_video_name, fra
                     tmp_new[int(height):int(height+new_h),int(width):int(width+new_w),:] = tmp
                     # so a white canvas with tmp in the center 
                     tmp_new = tmp_new.astype(np.uint8)
-                    tmp = cv2.resize(tmp_new,(192,192))
+                    tmp = cv2.resize(tmp_new,(512,512))
 
                     start = time.time()
                     seg_image(tmp, save_name, savesil_path)
