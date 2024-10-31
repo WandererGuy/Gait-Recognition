@@ -104,8 +104,8 @@ def track(video_path, video_save_folder, save_video_name, track_skip_frames):
     for i in tqdm(range(frame_count)):
         ret_val, frame = cap.read()
         if ret_val and i%track_skip_frames==0:
-            print ("frame_id: ", i)
             outputs, img_info = predictor.inference(frame, timer)
+            
             if outputs[0] is not None:
                 online_targets = tracker.update(outputs[0], [img_info['height'], img_info['width']], exp.test_size)
                 online_tlwhs = []
@@ -143,7 +143,7 @@ def track(video_path, video_save_folder, save_video_name, track_skip_frames):
             if ch == 27 or ch == ord("q") or ch == ord("Q"):
                 break
         else:
-            break
+            pass
         frame_id += 1
 
     if track_cfgs["save_result"] == "True":

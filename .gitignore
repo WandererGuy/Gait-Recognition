@@ -13,7 +13,6 @@ mars/
 
 *.jpg
 *.png
-OpenGait/demo/libs/pickle_variables
 OpenGait/demo/output
 *.mp4
 
@@ -21,3 +20,4 @@ ByteTrack
 testing_images
 dangdi.zip
 dang_di_sample
+QAGait

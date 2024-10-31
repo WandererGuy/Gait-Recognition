@@ -47,7 +47,6 @@ async def tracking(video_path: str = Form(...), track_skip_frames: int = Form(..
     video_save_folder = osp.join(output_dir, save_video_name)
     # tracking
     track_result = track(video_path, video_save_folder, save_video_name + '.mp4', track_skip_frames)
-    print (track_result)
     track_video_folder = track_crop(video_path, track_result)
     # with open(tmp, 'wb') as file:
     #     pickle.dump(track_result, file)
