@@ -21,3 +21,6 @@ testing_images
 dangdi.zip
 dang_di_sample
 QAGait
+env_track_
+
+!OpenGait/demo/checkpoints/bytetrack_model/yolox_x_mix_det.py
