@@ -1,6 +1,8 @@
 follow these steps to download checkpoints
 - step 1:
 ```
+cd OpenGait
+mkdir demo/checkpoints
 cd demo/checkpoints
 mkdir bytetrack_model
 cd bytetrack_model
