@@ -1,3 +1,21 @@
+# intro 
+- this repository takes inspiration from (many thanks to their incredible work)
+    - https://github.com/jdyjjj/All-in-One-Gait
+    - https://github.com/ShiqiYu/OpenGait
+- You can see their code and env, checkpoint prepare to understand thsi repository better
+- I have improved upon their work: this repository handle 3 servers commincated with each other though FastAPI endpoints (microservice style)
+- we have : tracking server, segment server, gait recogntion server
+
+# Demo Results
+- each person gets tracking bounding box and re-identification (this demo i took from  https://github.com/jdyjjj/All-in-One-Gait)
+- but rest assured my repository can produce such result and even better since it is microservice rather than original monolith code base, and it can scale for multiple camera scenario
+<div align="center">
+       <img src="./OpenGait/demo/output/demo_video_result/gallery.gif"       width = "144" height = "256" alt="gallery" /> 
+       <img src="./OpenGait/demo/output/demo_video_result/probe1-After.gif"  width = "455" height = "256" alt="probe1-After" />
+       <img src="./OpenGait/demo/output/demo_video_result/probe2-After.gif"  width = "144" height = "256" alt="probe2-After" /> 
+</div>
+
+
 # prepare checkpoints 
 see prepare_ckpts.md
 

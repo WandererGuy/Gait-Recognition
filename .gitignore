@@ -1,3 +1,4 @@
+!OpenGait/demo/output
 OpenGait/all_env/env_seg
 OpenGait/all_env/env_track
 OpenGait/all_env/env_rec
@@ -24,3 +25,4 @@ QAGait
 env_track_
 
 !OpenGait/demo/checkpoints/bytetrack_model/yolox_x_mix_det.py
+!OpenGait/demo/output
